@@ -1,0 +1,128 @@
+# .github/workflows/main.yml
+name: bot
+
+# NOT: GitHub Actions cron'u GARANTİLİ DEĞİLDİR (yoğunlukta gecikir/atlanır).
+# Kod bu gecikmeye dayanıklıdır: min_minutes_between_posts + sessiz saat state
+# üzerinden yönetilir. */30 = günde ~48 tetikleme, ayda ~1.440 çalışma; private
+# depo ücretsiz Actions limiti (2.000 dk/ay) içine sığar. Sessiz saatlerde kod
+# fetch yapmadan erken çıkar.
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+    inputs:
+      profile:
+        description: "Tek profil çalıştır (boşsa tümü)"
+        required: false
+        default: ""
+
+# State repoya commit edildiği için yazma izni gerekir.
+permissions:
+  contents: write
+
+jobs:
+  # 1) profiles/ dizinini tarayıp aktif profil adlarını JSON matrix'e çevirir.
+  #    Yeni profil eklemek bu dosyayı DEĞİŞTİRMEYİ gerektirmez.
+  discover:
+    runs-on: ubuntu-latest
+    outputs:
+      profiles: ${{ steps.list.outputs.profiles }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Aktif profilleri keşfet
+        id: list
+        run: |
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json, glob, os
+          import yaml
+          selected = os.environ.get("INPUT_PROFILE", "").strip()
+          names = []
+          for path in sorted(glob.glob("profiles/*.yaml")):
+              data = yaml.safe_load(open(path, encoding="utf-8"))
+              if not data or not data.get("enabled", False):
+                  continue
+              name = data["name"]
+              if selected and name != selected:
+                  continue
+              names.append(name)
+          print("profiles=" + json.dumps(names))
+          PY
+        env:
+          INPUT_PROFILE: ${{ github.event.inputs.profile }}
+
+  run:
+    needs: discover
+    # Boş matrix (aktif profil yoksa) job'u atlar.
+    if: ${{ needs.discover.outputs.profiles != '[]' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      # Her profil kendi paralel job'unda; biri çökse diğerleri devam eder.
+      matrix:
+        profile: ${{ fromJson(needs.discover.outputs.profiles) }}
+    # Aynı profilin iki koşusu çakışmasın.
+    concurrency:
+      group: bot-${{ matrix.profile }}
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Bağımlılıkları kur
+        run: pip install -r requirements.txt
+
+      # NOT: X API kullanıldığı için tarayıcı (Playwright) kurulumu YOK — hızlı.
+      # (twitter_browser yöntemine dönersen buraya playwright install eklenir.)
+
+      - name: Botu çalıştır
+        env:
+          TZ: Europe/Istanbul
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_MODEL: ${{ secrets.GEMINI_MODEL }}
+          LOG_LEVEL: INFO
+          # X resmi API anahtarları (Repo Secrets'tan). Yeni profil için
+          # aynı adların "_<PROFİL>" ekli sürümü kullanılabilir (bkz. haber.yaml).
+          X_API_KEY: ${{ secrets.X_API_KEY }}
+          X_API_SECRET: ${{ secrets.X_API_SECRET }}
+          X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
+          X_ACCESS_TOKEN_SECRET: ${{ secrets.X_ACCESS_TOKEN_SECRET }}
+        run: python main.py --profile "${{ matrix.profile }}"
+
+      # Hata teşhisi: ekran görüntüleri/loglar artifact olarak yüklenir.
+      - name: Teşhis artifact'lerini yükle
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: diag-${{ matrix.profile }}
+          path: screenshots/
+          if-no-files-found: ignore
+          retention-days: 5
+
+      # State'i repoya geri commit et. Eş zamanlı profil job'ları arası
+      # push çakışmasına karşı pull --rebase + retry uygulanır.
+      - name: State'i commit et
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if [ -z "$(git status --porcelain state/)" ]; then
+            echo "State değişmedi, commit yok"
+            exit 0
+          fi
+          git add state/
+          git commit -m "chore(state): ${{ matrix.profile }} güncellendi [skip ci]"
+          for attempt in 1 2 3 4 5; do
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" || true
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then
+              echo "State push edildi (deneme $attempt)"
+              exit 0
+            fi
+            echo "Push çakıştı, yeniden deneniyor ($attempt)..."
+            sleep $((RANDOM % 6 + 2))
+          done
+          echo "State push edilemedi (kritik değil)"

@@ -1,0 +1,102 @@
+# profiles/haber.yaml
+# Örnek profil. Yeni hesap = bu dosyanın bir kopyası + yeni bir GitHub Secret.
+# Koda dokunmadan yeni profil eklenebilir.
+
+name: haber
+enabled: true
+account_handle: "@habermatikHQ"
+
+# Resmi X API ile paylaşım (tarayıcı yok, giriş yok, ban yok).
+publisher_type: x_api
+# Bu profilin API anahtarları .env'de şu adlarla aranır (yoksa eksiz hali):
+#   X_API_KEY_HABER, X_API_SECRET_HABER, X_ACCESS_TOKEN_HABER, X_ACCESS_TOKEN_SECRET_HABER
+# Tek profil kullanıyorsan eksiz adlar da yeterli: X_API_KEY, X_API_SECRET, ...
+
+# (Sadece publisher_type: twitter_browser için gerekir — API kullanınca boş kalabilir)
+session_secret_name: SESSION_B64_HABER
+
+# Başlığında bunlardan biri geçen haberi PAYLAŞMA — soru/belirsiz "tıklama tuzağı"
+# başlıkları (ör. "deprem mi oldu", "az önce nerede") gerçek olay değil, SEO oyunu.
+exclude_title_keywords:
+  - "mı oldu"
+  - "mi oldu"
+  - "mu oldu"
+  - "mü oldu"
+  - "ne oldu"
+  - "az önce"
+  - "son depremler"
+  - "nerede oldu"
+  - "kim oldu"
+  - "kimdir"
+  - "nedir"
+  - "ne zaman"
+  - "il il"
+  - "canlı anlatım"
+  - "dakika dakika"
+  - "saat kaçta"
+
+persona:
+  system_prompt: |
+    Sen ETKİLEŞİM odaklı bir dijital haber editörüsün. İlginç, şaşırtıcı ve
+    merak uyandıran haberleri sade, akıcı ve dikkat çekici bir Türkçeyle TEK
+    bir tweet'e dönüştürürsün. Okuyucuyu ilk cümlede durduran bir açı bulursun
+    ama ASLA clickbait, abartı veya yalan kullanmazsın — merak uyandır, dürüst
+    kal. Kuru bülten değil; paylaşılası, net ve doğru. Telifli metni birebir
+    kopyalamaz, kendi cümlelerinle kısa ve vurucu bir özet yazarsın.
+  max_chars: 240
+  hashtag_count: 1           # Pusholder tarzı: az/öz hashtag
+  hashtag_whitelist: []      # boşsa Gemini konuya uygun serbest üretir
+  banned_words:              # clickbait/abartı filtresi
+    - "tıkla"
+    - "inanılmaz"
+
+# ETKİLEŞİM MODU: ilginç/şaşırtıcı (ağırlıklı) + insan hikayesi + ekonomi + az gündem.
+# Bot son dakikada birinci olamaz; farkı "ilginç/paylaşılası" içerikle yaratır.
+sources:
+  - type: rss
+    name: "Webtekno"
+    url: "https://www.webtekno.com/rss.xml"
+    weight: 3                # ilginç/şaşırtıcı (etkileşimin motoru)
+    max_age_hours: 24
+  - type: rss
+    name: "Habertürk Yaşam"
+    url: "https://www.haberturk.com/rss/yasam.xml"
+    weight: 2                # insan hikayesi / yaşam / ilginç
+    max_age_hours: 18
+  - type: rss
+    name: "NTV Yaşam"
+    url: "https://www.ntv.com.tr/yasam.rss"
+    weight: 2                # yaşam / ilginç
+    max_age_hours: 18
+  - type: rss
+    name: "Habertürk Ekonomi"
+    url: "https://www.haberturk.com/rss/ekonomi.xml"
+    weight: 2                # ekonomi (Türk kitlesi çok duyarlı)
+    max_age_hours: 12
+  - type: rss
+    name: "NTV Teknoloji"
+    url: "https://www.ntv.com.tr/teknoloji.rss"
+    weight: 1                # teknoloji / ilginç
+    max_age_hours: 24
+  - type: rss
+    name: "NTV Son Dakika"
+    url: "https://www.ntv.com.tr/son-dakika.rss"
+    weight: 1                # büyük gündemi kaçırma (az ağırlık)
+    max_age_hours: 6
+
+schedule:
+  max_posts_per_run: 1          # koşu başına en fazla 1 tweet
+  # Cron */30 ile uyumlu: 25 < 30 olduğundan her yarım saat slotu paylaşır
+  # (jitter payı da bırakır). Böylece efektif tempo ~30 dk olur.
+  min_minutes_between_posts: 25
+  quiet_hours:
+    start: "01:00"             # gece sessiz saat başlangıcı (Europe/Istanbul)
+    end: "07:30"              # gece sessiz saat bitişi
+    # Sessiz saat SADECE Pzt-Cum sabahları (= Paz-Per geceleri) uygulanır.
+    # Cmt/Paz sabahları listede yok => Cuma ve Cumartesi geceleri paylaşım açık.
+    days: [1, 2, 3, 4, 5]
+  active_days: [1, 2, 3, 4, 5, 6, 7]   # Pzt=1 .. Paz=7 (her gün)
+
+state:
+  namespace: haber
+  dedupe_ttl_days: 7

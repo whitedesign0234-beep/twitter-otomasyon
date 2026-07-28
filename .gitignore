@@ -1,0 +1,27 @@
+# .gitignore
+
+# Ortam değişkenleri ve sırlar
+.env
+.sessions/
+*.session.json
+session_*.json
+*.b64.txt
+
+# Ekran görüntüleri ve geçici görseller
+*.png
+*.jpg
+*.jpeg
+screenshots/
+artifacts/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+
+# Playwright indirilen tarayıcılar (yerelde)
+.cache/
+
+# NOT: state/ dizini bilerek DIŞLANMAZ — durum repoya commit edilir (bkz. store.py).
