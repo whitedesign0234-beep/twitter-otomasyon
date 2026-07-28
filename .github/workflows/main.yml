@@ -1,14 +1,15 @@
 # .github/workflows/main.yml
 name: bot
 
-# NOT: GitHub Actions cron'u GARANTİLİ DEĞİLDİR. GitHub, ":00" ve ":30" gibi
-# YOĞUN dakikalarda zamanlı koşuları ciddi geciktirir/atlar. Bu yüzden cron
-# yoğun-olmayan dakikalara ayarlandı: :09 ve :39 (yine ~30 dk'da bir).
-# Kod gecikmeye dayanıklı: min_minutes_between_posts + sessiz saat state ile
-# yönetilir; sessiz saatlerde fetch yapmadan erken çıkar.
+# NOT: GitHub Actions cron'u GARANTİLİ DEĞİLDİR; tetikleri geciktirir/atlar
+# (özellikle :00/:30 yoğun dakikalarda). Bu yüzden depo PUBLIC yapıldı (sınırsız
+# ücretsiz Actions) ve yoğun-olmayan 4 dakikada TETİK verilir (:09,:24,:39,:54).
+# Biri atlanırsa diğeri yakalar. Gerçek tempoyu KOD tutar: min_minutes_between_posts
+# (25 dk) + sessiz saat state ile; iki tetik arasında 25 dk geçmediyse fetch bile
+# yapmadan çıkar. Böylece efektif ~30 dk aralık korunur, cron'a bağlı kalmaz.
 on:
   schedule:
-    - cron: "9,39 * * * *"
+    - cron: "9,24,39,54 * * * *"
   workflow_dispatch:
     inputs:
       profile:
