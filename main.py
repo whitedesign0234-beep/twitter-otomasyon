@@ -186,6 +186,7 @@ async def run_profile(profile: Profile, args: argparse.Namespace) -> None:
             break
         if result.success:
             store.mark_seen(item.url)
+            store.add_posted_title(item.title)  # konu-bazlı mükerrer önleme
             store.set_last_post_now()
             log.info("Paylaşıldı: %s", item.url)
         else:

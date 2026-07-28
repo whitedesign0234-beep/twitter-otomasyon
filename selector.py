@@ -20,12 +20,41 @@ logger = logging.getLogger(__name__)
 TIMEZONE = ZoneInfo("Europe/Istanbul")
 FRESHNESS_HALF_LIFE_HOURS = 6.0      # tazelik skoru bu sürede yarıya iner
 WEIGHT_MULTIPLIER = 1.0              # kaynak ağırlığının skora katkı çarpanı
-TITLE_SIMILARITY_THRESHOLD = 0.72   # bu oranın üstü "aynı haber" sayılır
+TITLE_SIMILARITY_THRESHOLD = 0.72     # bu oranın üstü "aynı haber" (aynı koşuda)
+CROSS_RUN_SIMILARITY_THRESHOLD = 0.72  # geçmiş paylaşımlarla metin benzerliği eşiği
+TOPIC_TOKEN_OVERLAP_THRESHOLD = 0.5   # anlamlı kelime örtüşmesi (Jaccard) eşiği
+MIN_SIGNIFICANT_TOKEN_LEN = 4         # kısa kelimeleri (ve, bir, ile...) yok say
 
 
 def _title_similarity(a: str, b: str) -> float:
     """İki başlık arasındaki benzerlik oranını (0-1) döndürür."""
     return SequenceMatcher(None, a.casefold(), b.casefold()).ratio()
+
+
+def _significant_tokens(title: str) -> set[str]:
+    """Başlıktaki anlamlı (uzun) kelimeleri küçük harfli küme olarak döndürür."""
+    return {w for w in re.findall(r"\w+", title.casefold()) if len(w) >= MIN_SIGNIFICANT_TOKEN_LEN}
+
+
+def _is_duplicate_topic(title: str, recent_titles: list[str]) -> bool:
+    """Başlık, yakında paylaşılan başlıklardan birine yeterince benziyor mu?
+
+    İki ölçüt: (1) metin benzerliği (aynı/çok yakın başlık), (2) anlamlı kelime
+    örtüşmesi (aynı konunun farklı ifadesi). Herhangi biri eşiği aşarsa mükerrer.
+    """
+    tokens = _significant_tokens(title)
+    for prev in recent_titles:
+        if _title_similarity(title, prev) >= CROSS_RUN_SIMILARITY_THRESHOLD:
+            return True
+        prev_tokens = _significant_tokens(prev)
+        shared = tokens & prev_tokens
+        union = tokens | prev_tokens
+        # Yanlış eleme riskine karşı yüksek bar: en az 4 ORTAK anlamlı kelime VE
+        # güçlü örtüşme (aynı olayın yakın ifadesi). Entity-adı çakışmalarını
+        # (ör. iki farklı "Erdoğan/Türkiye" haberi) yanlışlıkla elemez.
+        if len(shared) >= 4 and union and len(shared) / len(union) >= TOPIC_TOKEN_OVERLAP_THRESHOLD:
+            return True
+    return False
 
 
 @lru_cache(maxsize=8)
@@ -103,11 +132,15 @@ def select(
     else:
         logger.info("[%s] TEST modu: zamanlama kapıları atlanıyor", profile.name)
 
-    # 3) Görülmemiş VE tıklama-tuzağı başlık içermeyen adayları skora göre sırala.
+    # 3) Adayları ele: (a) daha önce görülen URL, (b) tıklama-tuzağı başlık,
+    #    (c) yakında paylaşılan başlığa benzer konu (kaynaklar arası mükerrer).
     keywords = profile.exclude_title_keywords
+    recent_titles = store.recent_posted_titles()
     unseen = [
         c for c in candidates
-        if not store.has_seen(c.url) and not _is_excluded_title(c.title, keywords)
+        if not store.has_seen(c.url)
+        and not _is_excluded_title(c.title, keywords)
+        and not _is_duplicate_topic(c.title, recent_titles)
     ]
     ranked = sorted(unseen, key=lambda c: _score(c, now_utc), reverse=True)
 

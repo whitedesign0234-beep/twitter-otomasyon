@@ -64,6 +64,8 @@ class ProfileState:
     seen: dict[str, float] = field(default_factory=dict)  # url_hash -> ilk görülme ts
     last_post_ts: float = 0.0
     feed_meta: dict[str, dict[str, str]] = field(default_factory=dict)  # url -> {etag,...}
+    # Yakında PAYLAŞILAN başlıklar: [[başlık, ts], ...] — konu bazlı mükerrer önleme.
+    posted_titles: list = field(default_factory=list)
 
 
 class StateStore:
@@ -86,6 +88,7 @@ class StateStore:
                 seen=dict(data.get("seen", {})),
                 last_post_ts=float(data.get("last_post_ts", 0.0)),
                 feed_meta=dict(data.get("feed_meta", {})),
+                posted_titles=list(data.get("posted_titles", [])),
             )
         except (json.JSONDecodeError, ValueError, OSError) as exc:
             logger.warning("State okunamadı (%s), sıfırdan başlanıyor: %s", self.path, exc)
@@ -108,6 +111,15 @@ class StateStore:
         """Son paylaşım zamanını şimdiye ayarlar."""
         self.state.last_post_ts = time.time()
 
+    def add_posted_title(self, title: str) -> None:
+        """Paylaşılan başlığı konu-bazlı mükerrer önleme için kaydeder."""
+        self.state.posted_titles.append([title, time.time()])
+
+    def recent_posted_titles(self) -> list[str]:
+        """TTL içinde paylaşılmış başlıkların listesini döndürür."""
+        cutoff = time.time() - self.ttl_seconds
+        return [t for t, ts in self.state.posted_titles if ts >= cutoff]
+
     def get_feed_meta(self, feed_url: str) -> dict[str, str]:
         """Feed için saklı ETag/Last-Modified başlıklarını döndürür."""
         return self.state.feed_meta.get(feed_url, {})
@@ -123,12 +135,15 @@ class StateStore:
             self.state.feed_meta[feed_url] = meta
 
     def prune(self) -> None:
-        """TTL süresini aşan 'seen' kayıtlarını temizler, dosya şişmesin."""
+        """TTL süresini aşan 'seen' ve 'posted_titles' kayıtlarını temizler."""
         cutoff = time.time() - self.ttl_seconds
         before = len(self.state.seen)
         self.state.seen = {
             key: ts for key, ts in self.state.seen.items() if ts >= cutoff
         }
+        self.state.posted_titles = [
+            entry for entry in self.state.posted_titles if entry[1] >= cutoff
+        ]
         removed = before - len(self.state.seen)
         if removed:
             logger.info("State budandı: %d eski kayıt silindi", removed)
@@ -140,6 +155,7 @@ class StateStore:
             "seen": self.state.seen,
             "last_post_ts": self.state.last_post_ts,
             "feed_meta": self.state.feed_meta,
+            "posted_titles": self.state.posted_titles,
         }
         tmp = self.path.with_suffix(".json.tmp")
         tmp.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
