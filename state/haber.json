@@ -1,18 +1,25 @@
 {
   "seen": {
-    "e79925e6bcf2c1c5be623340e73142d68f18e18dc64889dab29ac2eefd09cdea": 1785251731.4123318
+    "e79925e6bcf2c1c5be623340e73142d68f18e18dc64889dab29ac2eefd09cdea": 1785251731.4123318,
+    "14a6fdfc0df9e96fd6d73d641ffa8c0808c38c1dce04b51b3d5622d428594ac6": 1785255292.4675157
   },
-  "last_post_ts": 1785251731.4123335,
+  "last_post_ts": 1785255292.46752,
   "feed_meta": {
     "https://www.webtekno.com/rss.xml": {
-      "etag": "W/\"321b3-657ad4a08c11d\"",
-      "modified": "Tue, 28 Jul 2026 15:14:03 GMT"
+      "etag": "W/\"321b3-657ae20a2e524\"",
+      "modified": "Tue, 28 Jul 2026 16:14:03 GMT"
     },
     "https://www.haberturk.com/rss/yasam.xml": {
-      "etag": "W/\"KXHOOMECLDQWSRLQU\""
+      "etag": "W/\"KXHOOMECLDKPVLLQU\""
     },
     "https://www.haberturk.com/rss/ekonomi.xml": {
-      "etag": "W/\"KXADCFAPHHVYNSUQS\""
+      "etag": "W/\"KXADCFAPHHXKNUSQS\""
     }
-  }
+  },
+  "posted_titles": [
+    [
+      "Land Rover Discovery Sport Üretimi Bitiyor!",
+      1785255292.4675186
+    ]
+  ]
 }
