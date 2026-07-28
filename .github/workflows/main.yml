@@ -7,8 +7,6 @@ name: bot
 # depo ücretsiz Actions limiti (2.000 dk/ay) içine sığar. Sessiz saatlerde kod
 # fetch yapmadan erken çıkar.
 on:
-  push:
-    branches: [master]
   schedule:
     - cron: "*/30 * * * *"
   workflow_dispatch:
