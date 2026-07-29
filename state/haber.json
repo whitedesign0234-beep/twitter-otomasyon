@@ -17,19 +17,20 @@
     "2aa46830f38745937054922c18a9caa00b4c1cb9bf5ab0f39d6fdef1b57797b0": 1785319274.5435,
     "2b21a4e9c012371cf0fb3a689c3ec196e567f2c48ef362a58d9ddeb69d0d8607": 1785322873.766454,
     "d8b8cd4c4d47032501408e176fb7d24e83f06323c1ef53f91608bc28f38df2c9": 1785324666.9864569,
-    "9c1fb6d2937cf7bb8c541f26d75374ba309d236ea9867ece05ae50d9a7c84322": 1785326482.5153224
+    "9c1fb6d2937cf7bb8c541f26d75374ba309d236ea9867ece05ae50d9a7c84322": 1785326482.5153224,
+    "0fa5fd0d2ef33a9a6d93df8bdce433135ec06913ae05a4a325f54e5414906cc5": 1785328268.2226496
   },
-  "last_post_ts": 1785326482.515327,
+  "last_post_ts": 1785328268.2226536,
   "feed_meta": {
     "https://www.webtekno.com/rss.xml": {
-      "etag": "W/\"324e9-657beae79d954\"",
-      "modified": "Wed, 29 Jul 2026 11:59:02 GMT"
+      "etag": "W/\"324e9-657bf1d5b0dd5\"",
+      "modified": "Wed, 29 Jul 2026 12:30:03 GMT"
     },
     "https://www.haberturk.com/rss/yasam.xml": {
-      "etag": "W/\"KXHOOMECLDOXVLVPU\""
+      "etag": "W/\"KXHOOMECLDOMKZYOU\""
     },
     "https://www.haberturk.com/rss/ekonomi.xml": {
-      "etag": "W/\"KXADCFAPHHRWPXORS\""
+      "etag": "W/\"KXHOOMECLDYNPNYOU\""
     }
   },
   "posted_titles": [
@@ -100,6 +101,10 @@
     [
       "Nothing, Kendi Akıllı Saatini Geliştiriyor",
       1785326482.5153258
+    ],
+    [
+      "Samsung Galaxy S26 FE'nin Şarj Hızı Ortaya Çıktı",
+      1785328268.2226522
     ]
   ]
 }
