@@ -31,19 +31,20 @@
     "cafdf15c505519c53c4cada20b6e08a6c2ea297b75e43b7c6098fdc49ad2aa42": 1785346263.6892607,
     "b48c58a32ae01e2d9cd248b3c6c3271da3aaf16767459e6d341a6d415d701451": 1785348079.0296538,
     "39331caa9596eb10dff45bf2f1963c5b08d214cbe63093c3f364b20901140e8d": 1785349864.1138163,
-    "9302ae593d9f6254805e153bd4dc3ad63c7ec1809614d79bee1658a3ba6556f5": 1785351686.9949617
+    "9302ae593d9f6254805e153bd4dc3ad63c7ec1809614d79bee1658a3ba6556f5": 1785351686.9949617,
+    "2bac2d575faf9059d60144fb0d1b63361be053e2db61c7a7364ba7479bdef2a8": 1785353476.1776648
   },
-  "last_post_ts": 1785351686.9949656,
+  "last_post_ts": 1785353476.1776693,
   "feed_meta": {
     "https://www.webtekno.com/rss.xml": {
-      "etag": "W/\"31a30-657c493b86918\"",
-      "modified": "Wed, 29 Jul 2026 19:01:03 GMT"
+      "etag": "W/\"31a30-657c4f7d4b7b7\"",
+      "modified": "Wed, 29 Jul 2026 19:29:03 GMT"
     },
     "https://www.haberturk.com/rss/yasam.xml": {
-      "etag": "W/\"KXHOOMECLDROXYVOU\""
+      "etag": "W/\"KXHOOMECLDMSUYROU\""
     },
     "https://www.haberturk.com/rss/ekonomi.xml": {
-      "etag": "W/\"KXADCFAPHHXXNZYQS\""
+      "etag": "W/\"KXADCFAPHHWVLNXQS\""
     }
   },
   "posted_titles": [
@@ -170,6 +171,10 @@
     [
       "AMD, Uygun Fiyatına Rağmen Bilgisayarları Uçuracak Ekran Kartı RX 9050’yi Tanıttı: İşte Özellikleri",
       1785351686.9949648
+    ],
+    [
+      "[Ağustos 2026] Toplam Fiyatı 3 Bin TL'yi Aşan 3 Oyun PlayStation Plus Abonelerine Ücretsiz",
+      1785353476.177668
     ]
   ]
 }
