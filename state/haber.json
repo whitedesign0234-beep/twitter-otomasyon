@@ -18,19 +18,20 @@
     "2b21a4e9c012371cf0fb3a689c3ec196e567f2c48ef362a58d9ddeb69d0d8607": 1785322873.766454,
     "d8b8cd4c4d47032501408e176fb7d24e83f06323c1ef53f91608bc28f38df2c9": 1785324666.9864569,
     "9c1fb6d2937cf7bb8c541f26d75374ba309d236ea9867ece05ae50d9a7c84322": 1785326482.5153224,
-    "0fa5fd0d2ef33a9a6d93df8bdce433135ec06913ae05a4a325f54e5414906cc5": 1785328268.2226496
+    "0fa5fd0d2ef33a9a6d93df8bdce433135ec06913ae05a4a325f54e5414906cc5": 1785328268.2226496,
+    "c765a3d5da6f65ab06f4b401b58c140d2e7a2f0afc5afe6b456dc482a39cd2b6": 1785330074.947825
   },
-  "last_post_ts": 1785328268.2226536,
+  "last_post_ts": 1785330074.9478295,
   "feed_meta": {
     "https://www.webtekno.com/rss.xml": {
-      "etag": "W/\"324e9-657bf1d5b0dd5\"",
-      "modified": "Wed, 29 Jul 2026 12:30:03 GMT"
+      "etag": "W/\"324e9-657bf88cc18c4\"",
+      "modified": "Wed, 29 Jul 2026 13:00:05 GMT"
     },
     "https://www.haberturk.com/rss/yasam.xml": {
-      "etag": "W/\"KXHOOMECLDOMKZYOU\""
+      "etag": "W/\"KXHOOMECLDZMZSTPU\""
     },
     "https://www.haberturk.com/rss/ekonomi.xml": {
-      "etag": "W/\"KXHOOMECLDYNPNYOU\""
+      "etag": "W/\"KXHOOMECLDSOWMYOU\""
     }
   },
   "posted_titles": [
@@ -105,6 +106,10 @@
     [
       "Samsung Galaxy S26 FE'nin Şarj Hızı Ortaya Çıktı",
       1785328268.2226522
+    ],
+    [
+      "GTA 6'yı Bu Ülkeden Alırsanız Elinizde Patlayabilir: Kodlar Sadece 170 Gün Geçerli Olacak!",
+      1785330074.9478283
     ]
   ]
 }
