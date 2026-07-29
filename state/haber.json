@@ -33,19 +33,20 @@
     "39331caa9596eb10dff45bf2f1963c5b08d214cbe63093c3f364b20901140e8d": 1785349864.1138163,
     "9302ae593d9f6254805e153bd4dc3ad63c7ec1809614d79bee1658a3ba6556f5": 1785351686.9949617,
     "2bac2d575faf9059d60144fb0d1b63361be053e2db61c7a7364ba7479bdef2a8": 1785353476.1776648,
-    "3e62c8f3224fd3feed57976c80cf26e9e6040dfe0793711cabca0a1178e20f1a": 1785355271.143588
+    "3e62c8f3224fd3feed57976c80cf26e9e6040dfe0793711cabca0a1178e20f1a": 1785355271.143588,
+    "3c3dbb3cc36b3c3ecc522a98a0e6abf05f4fd99fedac6b2599813a0363fe4792": 1785358865.7675705
   },
-  "last_post_ts": 1785355271.1435933,
+  "last_post_ts": 1785358865.7675745,
   "feed_meta": {
     "https://www.webtekno.com/rss.xml": {
-      "etag": "W/\"31a30-657c5cad3e30b\"",
-      "modified": "Wed, 29 Jul 2026 20:28:03 GMT"
+      "etag": "W/\"31a30-657c63da11fad\"",
+      "modified": "Wed, 29 Jul 2026 21:00:09 GMT"
     },
     "https://www.haberturk.com/rss/yasam.xml": {
-      "etag": "W/\"KXHOOMECLDYZLQROU\""
+      "etag": "W/\"KXHOOMECLDOTOPTPU\""
     },
     "https://www.haberturk.com/rss/ekonomi.xml": {
-      "etag": "W/\"KXHOOMECLDRXVUXOU\""
+      "etag": "W/\"KXHOOMECLDTMPSRPU\""
     }
   },
   "posted_titles": [
@@ -180,6 +181,10 @@
     [
       "Türkiye'nin En Çok Satan Arabalarının ÖTV'siz Fiyatı Ne Kadar? Vergisiz Liste",
       1785355271.1435912
+    ],
+    [
+      "Elektrikli Arabaların Lastikleri Neden Daha Pahalı?",
+      1785358865.7675736
     ]
   ]
 }
