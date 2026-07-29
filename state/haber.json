@@ -20,19 +20,20 @@
     "9c1fb6d2937cf7bb8c541f26d75374ba309d236ea9867ece05ae50d9a7c84322": 1785326482.5153224,
     "0fa5fd0d2ef33a9a6d93df8bdce433135ec06913ae05a4a325f54e5414906cc5": 1785328268.2226496,
     "c765a3d5da6f65ab06f4b401b58c140d2e7a2f0afc5afe6b456dc482a39cd2b6": 1785330074.947825,
-    "2adff2c432634ede5c34dd377e26f16d80469f20f3ebe13fe14daaaa19dfeb25": 1785331863.596527
+    "2adff2c432634ede5c34dd377e26f16d80469f20f3ebe13fe14daaaa19dfeb25": 1785331863.596527,
+    "842e0c935e4ec39a9afcef19b3316b85d7cf45b55018fd9d6be7e96b25de06c4": 1785333680.0647738
   },
-  "last_post_ts": 1785331863.596531,
+  "last_post_ts": 1785333680.0647805,
   "feed_meta": {
     "https://www.webtekno.com/rss.xml": {
-      "etag": "W/\"324e9-657bff058cbd9\"",
-      "modified": "Wed, 29 Jul 2026 13:29:02 GMT"
+      "etag": "W/\"324e9-657c05f7c2c6b\"",
+      "modified": "Wed, 29 Jul 2026 14:00:07 GMT"
     },
     "https://www.haberturk.com/rss/yasam.xml": {
-      "etag": "W/\"KXHOOMECLDUXLXWOU\""
+      "etag": "W/\"KXADCFAPHHXKWONQS\""
     },
     "https://www.haberturk.com/rss/ekonomi.xml": {
-      "etag": "W/\"KXHOOMECLDWSNYVPU\""
+      "etag": "W/\"KXHOOMECLDUMZPTOU\""
     }
   },
   "posted_titles": [
@@ -115,6 +116,10 @@
     [
       "Apple, Çok Yakında 3 Yeni Ev Ürünü Tanıtabilir",
       1785331863.5965297
+    ],
+    [
+      "NASA'nın Teleskobunu Kurtarmak Gönderdiği Robotu Kontrolden Çıktı",
+      1785333680.064779
     ]
   ]
 }
