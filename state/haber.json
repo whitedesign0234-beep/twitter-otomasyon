@@ -29,19 +29,20 @@
     "06a205d3c69734e1ed2adee1c82e54c490b056c0d62b3fabb862331750e25183": 1785342671.4916303,
     "730b3e73adb62b31e851028c605337f92ff03ac8ea78a563d8514b47543f4e1a": 1785344475.3533423,
     "cafdf15c505519c53c4cada20b6e08a6c2ea297b75e43b7c6098fdc49ad2aa42": 1785346263.6892607,
-    "b48c58a32ae01e2d9cd248b3c6c3271da3aaf16767459e6d341a6d415d701451": 1785348079.0296538
+    "b48c58a32ae01e2d9cd248b3c6c3271da3aaf16767459e6d341a6d415d701451": 1785348079.0296538,
+    "39331caa9596eb10dff45bf2f1963c5b08d214cbe63093c3f364b20901140e8d": 1785349864.1138163
   },
-  "last_post_ts": 1785348079.0296595,
+  "last_post_ts": 1785349864.1138203,
   "feed_meta": {
     "https://www.webtekno.com/rss.xml": {
-      "etag": "W/\"31a30-657c3b9d80555\"",
-      "modified": "Wed, 29 Jul 2026 18:00:08 GMT"
+      "etag": "W/\"31a30-657c41db06711\"",
+      "modified": "Wed, 29 Jul 2026 18:28:03 GMT"
     },
     "https://www.haberturk.com/rss/yasam.xml": {
-      "etag": "W/\"KXADCFAPHHSQZLVPS\""
+      "etag": "W/\"KXADCFAPHHWNTKLRS\""
     },
     "https://www.haberturk.com/rss/ekonomi.xml": {
-      "etag": "W/\"KXADCFAPHHRPWOKQS\""
+      "etag": "W/\"KXHOOMECLDWLVXSWV\""
     }
   },
   "posted_titles": [
@@ -160,6 +161,10 @@
     [
       "GTA 6'ya Yönelik Sessizlik Yakında Bozulabilir: 3. Fragman Geliyor!",
       1785348079.0296576
+    ],
+    [
+      "Google Fotoğraflar'ın Sinir Bozucu Özelliği Artık Kapatılabiliyor",
+      1785349864.1138191
     ]
   ]
 }
