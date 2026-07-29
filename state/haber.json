@@ -19,19 +19,20 @@
     "d8b8cd4c4d47032501408e176fb7d24e83f06323c1ef53f91608bc28f38df2c9": 1785324666.9864569,
     "9c1fb6d2937cf7bb8c541f26d75374ba309d236ea9867ece05ae50d9a7c84322": 1785326482.5153224,
     "0fa5fd0d2ef33a9a6d93df8bdce433135ec06913ae05a4a325f54e5414906cc5": 1785328268.2226496,
-    "c765a3d5da6f65ab06f4b401b58c140d2e7a2f0afc5afe6b456dc482a39cd2b6": 1785330074.947825
+    "c765a3d5da6f65ab06f4b401b58c140d2e7a2f0afc5afe6b456dc482a39cd2b6": 1785330074.947825,
+    "2adff2c432634ede5c34dd377e26f16d80469f20f3ebe13fe14daaaa19dfeb25": 1785331863.596527
   },
-  "last_post_ts": 1785330074.9478295,
+  "last_post_ts": 1785331863.596531,
   "feed_meta": {
     "https://www.webtekno.com/rss.xml": {
-      "etag": "W/\"324e9-657bf88cc18c4\"",
-      "modified": "Wed, 29 Jul 2026 13:00:05 GMT"
+      "etag": "W/\"324e9-657bff058cbd9\"",
+      "modified": "Wed, 29 Jul 2026 13:29:02 GMT"
     },
     "https://www.haberturk.com/rss/yasam.xml": {
-      "etag": "W/\"KXHOOMECLDZMZSTPU\""
+      "etag": "W/\"KXHOOMECLDUXLXWOU\""
     },
     "https://www.haberturk.com/rss/ekonomi.xml": {
-      "etag": "W/\"KXHOOMECLDSOWMYOU\""
+      "etag": "W/\"KXHOOMECLDWSNYVPU\""
     }
   },
   "posted_titles": [
@@ -110,6 +111,10 @@
     [
       "GTA 6'yı Bu Ülkeden Alırsanız Elinizde Patlayabilir: Kodlar Sadece 170 Gün Geçerli Olacak!",
       1785330074.9478283
+    ],
+    [
+      "Apple, Çok Yakında 3 Yeni Ev Ürünü Tanıtabilir",
+      1785331863.5965297
     ]
   ]
 }
