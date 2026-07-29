@@ -2,19 +2,20 @@
   "seen": {
     "e79925e6bcf2c1c5be623340e73142d68f18e18dc64889dab29ac2eefd09cdea": 1785251731.4123318,
     "14a6fdfc0df9e96fd6d73d641ffa8c0808c38c1dce04b51b3d5622d428594ac6": 1785255292.4675157,
-    "bbec8223e3bd50ecc4ed87d67235296e2d58572a3ae14a57d6038ede46b0133d": 1785269816.9059508
+    "bbec8223e3bd50ecc4ed87d67235296e2d58572a3ae14a57d6038ede46b0133d": 1785269816.9059508,
+    "836a7998af3910496a512bc47dceca4118d0d7b53ecf06704589746fb0607d4d": 1785299458.4207132
   },
-  "last_post_ts": 1785269816.9059546,
+  "last_post_ts": 1785299458.4207172,
   "feed_meta": {
     "https://www.webtekno.com/rss.xml": {
-      "etag": "W/\"321b3-657b17e7ea1f5\"",
-      "modified": "Tue, 28 Jul 2026 20:15:03 GMT"
+      "etag": "W/\"32a0f-657b8652fd539\"",
+      "modified": "Wed, 29 Jul 2026 04:29:03 GMT"
     },
     "https://www.haberturk.com/rss/yasam.xml": {
-      "etag": "W/\"KXHOOMECLDTOYXKPU\""
+      "etag": "W/\"KXHOOMECLDVWOZVOU\""
     },
     "https://www.haberturk.com/rss/ekonomi.xml": {
-      "etag": "W/\"KXADCFAPHHXSKORQS\""
+      "etag": "W/\"KXHOOMECLDTQSLOPU\""
     }
   },
   "posted_titles": [
@@ -25,6 +26,10 @@
     [
       "Nike'tan Ayaklarınızı Rahatlatacak Akıllı Terlik",
       1785269816.9059532
+    ],
+    [
+      "WhatsApp Web'e Yıllardır Beklenen Özellik Geldi",
+      1785299458.420716
     ]
   ]
 }
