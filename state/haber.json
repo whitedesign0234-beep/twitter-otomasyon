@@ -25,19 +25,20 @@
     "0ee3b56e983cd14fc193b12c16c177a29da0ef8db3c3d41fb0e2bb9aad0f29c4": 1785335468.2339969,
     "724ba1e604a10e907eda05a776ad52876ad5a120f5acff524383adc0c95b9e3e": 1785337286.187481,
     "103ff937529c664b3f66ddb8bb7852dbb84f8ef2c7c84b8325a82e8902094e52": 1785339069.9655192,
-    "02038641f65967b10de4c99ac640b9a29f7979defe4eae461a33f6f5733c0c82": 1785340760.5483978
+    "02038641f65967b10de4c99ac640b9a29f7979defe4eae461a33f6f5733c0c82": 1785340760.5483978,
+    "06a205d3c69734e1ed2adee1c82e54c490b056c0d62b3fabb862331750e25183": 1785342671.4916303
   },
-  "last_post_ts": 1785340760.5484052,
+  "last_post_ts": 1785342671.4916341,
   "feed_meta": {
     "https://www.webtekno.com/rss.xml": {
-      "etag": "W/\"31a30-657c208c923bd\"",
-      "modified": "Wed, 29 Jul 2026 15:59:02 GMT"
+      "etag": "W/\"31a30-657c26ceeb03d\"",
+      "modified": "Wed, 29 Jul 2026 16:27:03 GMT"
     },
     "https://www.haberturk.com/rss/yasam.xml": {
-      "etag": "W/\"KXHOOMECLDLPTTXOU\""
+      "etag": "W/\"KXHOOMECLDXYKVXOU\""
     },
     "https://www.haberturk.com/rss/ekonomi.xml": {
-      "etag": "W/\"KXADCFAPHHTXUZZQS\""
+      "etag": "W/\"KXADCFAPHHNUXNWPS\""
     }
   },
   "posted_titles": [
@@ -140,6 +141,10 @@
     [
       "Rapor: Samsung, Gelecek OLED MacBook'ların Tek Ekran Tedarikçisi Olacak",
       1785340760.5484028
+    ],
+    [
+      "Gemini'ın Google Dökümanlar'daki Yetenekleri Arttı: Artık Yorumları Özetleyip, Sınıflandırabiliyor!",
+      1785342671.4916327
     ]
   ]
 }
