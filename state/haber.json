@@ -34,19 +34,20 @@
     "9302ae593d9f6254805e153bd4dc3ad63c7ec1809614d79bee1658a3ba6556f5": 1785351686.9949617,
     "2bac2d575faf9059d60144fb0d1b63361be053e2db61c7a7364ba7479bdef2a8": 1785353476.1776648,
     "3e62c8f3224fd3feed57976c80cf26e9e6040dfe0793711cabca0a1178e20f1a": 1785355271.143588,
-    "3c3dbb3cc36b3c3ecc522a98a0e6abf05f4fd99fedac6b2599813a0363fe4792": 1785358865.7675705
+    "3c3dbb3cc36b3c3ecc522a98a0e6abf05f4fd99fedac6b2599813a0363fe4792": 1785358865.7675705,
+    "f9e108d6ff627ccc88ea3b78590441e0fb4635d476338415e922f3dd28895958": 1785360664.9118123
   },
-  "last_post_ts": 1785358865.7675745,
+  "last_post_ts": 1785360664.9118166,
   "feed_meta": {
     "https://www.webtekno.com/rss.xml": {
-      "etag": "W/\"31a30-657c63da11fad\"",
-      "modified": "Wed, 29 Jul 2026 21:00:09 GMT"
+      "etag": "W/\"31a30-657c6a89318a4\"",
+      "modified": "Wed, 29 Jul 2026 21:30:03 GMT"
     },
     "https://www.haberturk.com/rss/yasam.xml": {
-      "etag": "W/\"KXHOOMECLDOTOPTPU\""
+      "etag": "W/\"KXHOOMECLDOYKRSWV\""
     },
     "https://www.haberturk.com/rss/ekonomi.xml": {
-      "etag": "W/\"KXHOOMECLDTMPSRPU\""
+      "etag": "W/\"KXADCFAPHHROLSWQS\""
     }
   },
   "posted_titles": [
@@ -185,6 +186,10 @@
     [
       "Elektrikli Arabaların Lastikleri Neden Daha Pahalı?",
       1785358865.7675736
+    ],
+    [
+      "Eren Kaşıkçı'ya MasterChef'teki arkadaşlarından veda. \"Ölüm hiç yakışmadı\"",
+      1785360664.9118154
     ]
   ]
 }
