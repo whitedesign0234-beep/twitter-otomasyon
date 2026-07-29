@@ -5,19 +5,20 @@
     "bbec8223e3bd50ecc4ed87d67235296e2d58572a3ae14a57d6038ede46b0133d": 1785269816.9059508,
     "836a7998af3910496a512bc47dceca4118d0d7b53ecf06704589746fb0607d4d": 1785299458.4207132,
     "30c37aa7367a487f98ce43dc275df317348c954da205c786b8a9f3bc1207dd6b": 1785301282.3233485,
-    "e7b4110a97a90b020912e4356d6c1dd491248d14d8bdc9229e047fbf14b87260": 1785303065.3163161
+    "e7b4110a97a90b020912e4356d6c1dd491248d14d8bdc9229e047fbf14b87260": 1785303065.3163161,
+    "62b2f4cbc2fca63e8bdad201f7f5a8c4262e1e2d82f1c81c9d62b9dd618ec662": 1785304869.8267212
   },
-  "last_post_ts": 1785303065.3163202,
+  "last_post_ts": 1785304869.826727,
   "feed_meta": {
     "https://www.webtekno.com/rss.xml": {
-      "etag": "W/\"32e33-657b93f531bd2\"",
-      "modified": "Wed, 29 Jul 2026 05:30:03 GMT"
+      "etag": "W/\"32d4c-657b9aadebdcf\"",
+      "modified": "Wed, 29 Jul 2026 06:00:07 GMT"
     },
     "https://www.haberturk.com/rss/yasam.xml": {
-      "etag": "W/\"KXHOOMECLDRUVMQPU\""
+      "etag": "W/\"KXHOOMECLDTYVRXPU\""
     },
     "https://www.haberturk.com/rss/ekonomi.xml": {
-      "etag": "W/\"KXHOOMECLDQNUVUPU\""
+      "etag": "W/\"KXADCFAPHHPLSXZPS\""
     }
   },
   "posted_titles": [
@@ -40,6 +41,10 @@
     [
       "Mobil DOA Sistemi Duyuruldu: Ne İşe Yarayacak?",
       1785303065.3163192
+    ],
+    [
+      "Apple'ın Piyasa Değeri İlk Kez 5 Trilyona Ulaştı",
+      1785304869.8267248
     ]
   ]
 }
