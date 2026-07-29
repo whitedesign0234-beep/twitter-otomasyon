@@ -9,19 +9,20 @@
     "62b2f4cbc2fca63e8bdad201f7f5a8c4262e1e2d82f1c81c9d62b9dd618ec662": 1785304869.8267212,
     "da9f3b011feb84cdf042f77f5b36fc0f384180b38d352f412fb009b7ebe3cae4": 1785306665.6612122,
     "3f45e450fec42d2ade9f54cbaeec2dfcc9e66ff5bd23e6952938ece7c367dc8a": 1785308473.9061296,
-    "3069464b44a72605690446564371e19d319f47aa9fe01ea13ed64a60c0b21089": 1785310265.8750749
+    "3069464b44a72605690446564371e19d319f47aa9fe01ea13ed64a60c0b21089": 1785310265.8750749,
+    "a5c2c4ac5988021ca3432209ccb91971bf18b02130a41b1f36bb07bb994aa134": 1785312083.2401786
   },
-  "last_post_ts": 1785310265.8750782,
+  "last_post_ts": 1785312083.240183,
   "feed_meta": {
     "https://www.webtekno.com/rss.xml": {
-      "etag": "W/\"328dd-657baec7c714d\"",
-      "modified": "Wed, 29 Jul 2026 07:30:03 GMT"
+      "etag": "W/\"32f98-657bb5b5dc7cd\"",
+      "modified": "Wed, 29 Jul 2026 08:01:03 GMT"
     },
     "https://www.haberturk.com/rss/yasam.xml": {
-      "etag": "W/\"KXADCFAPHHZOYPOQS\""
+      "etag": "W/\"KXHOOMECLDYPQMYOU\""
     },
     "https://www.haberturk.com/rss/ekonomi.xml": {
-      "etag": "W/\"KXHOOMECLDRMVOUPU\""
+      "etag": "W/\"KXHOOMECLDVKTQNPU\""
     }
   },
   "posted_titles": [
@@ -60,6 +61,10 @@
     [
       "Gornik Zabrze-Fenerbahçe Maçı Hangi Kanaldan Yayınlanacak?",
       1785310265.8750768
+    ],
+    [
+      "25-35 Bin TL Arasına Alınabilecek En İyi Telefonlar (2026 Güncel Liste)",
+      1785312083.2401817
     ]
   ]
 }
