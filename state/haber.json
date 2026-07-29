@@ -30,19 +30,20 @@
     "730b3e73adb62b31e851028c605337f92ff03ac8ea78a563d8514b47543f4e1a": 1785344475.3533423,
     "cafdf15c505519c53c4cada20b6e08a6c2ea297b75e43b7c6098fdc49ad2aa42": 1785346263.6892607,
     "b48c58a32ae01e2d9cd248b3c6c3271da3aaf16767459e6d341a6d415d701451": 1785348079.0296538,
-    "39331caa9596eb10dff45bf2f1963c5b08d214cbe63093c3f364b20901140e8d": 1785349864.1138163
+    "39331caa9596eb10dff45bf2f1963c5b08d214cbe63093c3f364b20901140e8d": 1785349864.1138163,
+    "9302ae593d9f6254805e153bd4dc3ad63c7ec1809614d79bee1658a3ba6556f5": 1785351686.9949617
   },
-  "last_post_ts": 1785349864.1138203,
+  "last_post_ts": 1785351686.9949656,
   "feed_meta": {
     "https://www.webtekno.com/rss.xml": {
-      "etag": "W/\"31a30-657c41db06711\"",
-      "modified": "Wed, 29 Jul 2026 18:28:03 GMT"
+      "etag": "W/\"31a30-657c493b86918\"",
+      "modified": "Wed, 29 Jul 2026 19:01:03 GMT"
     },
     "https://www.haberturk.com/rss/yasam.xml": {
-      "etag": "W/\"KXADCFAPHHWNTKLRS\""
+      "etag": "W/\"KXHOOMECLDROXYVOU\""
     },
     "https://www.haberturk.com/rss/ekonomi.xml": {
-      "etag": "W/\"KXHOOMECLDWLVXSWV\""
+      "etag": "W/\"KXADCFAPHHXXNZYQS\""
     }
   },
   "posted_titles": [
@@ -165,6 +166,10 @@
     [
       "Google Fotoğraflar'ın Sinir Bozucu Özelliği Artık Kapatılabiliyor",
       1785349864.1138191
+    ],
+    [
+      "AMD, Uygun Fiyatına Rağmen Bilgisayarları Uçuracak Ekran Kartı RX 9050’yi Tanıttı: İşte Özellikleri",
+      1785351686.9949648
     ]
   ]
 }
