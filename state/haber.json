@@ -8,19 +8,20 @@
     "e7b4110a97a90b020912e4356d6c1dd491248d14d8bdc9229e047fbf14b87260": 1785303065.3163161,
     "62b2f4cbc2fca63e8bdad201f7f5a8c4262e1e2d82f1c81c9d62b9dd618ec662": 1785304869.8267212,
     "da9f3b011feb84cdf042f77f5b36fc0f384180b38d352f412fb009b7ebe3cae4": 1785306665.6612122,
-    "3f45e450fec42d2ade9f54cbaeec2dfcc9e66ff5bd23e6952938ece7c367dc8a": 1785308473.9061296
+    "3f45e450fec42d2ade9f54cbaeec2dfcc9e66ff5bd23e6952938ece7c367dc8a": 1785308473.9061296,
+    "3069464b44a72605690446564371e19d319f47aa9fe01ea13ed64a60c0b21089": 1785310265.8750749
   },
-  "last_post_ts": 1785308473.9061341,
+  "last_post_ts": 1785310265.8750782,
   "feed_meta": {
     "https://www.webtekno.com/rss.xml": {
-      "etag": "W/\"32793-657ba817dc8b3\"",
-      "modified": "Wed, 29 Jul 2026 07:00:08 GMT"
+      "etag": "W/\"328dd-657baec7c714d\"",
+      "modified": "Wed, 29 Jul 2026 07:30:03 GMT"
     },
     "https://www.haberturk.com/rss/yasam.xml": {
-      "etag": "W/\"KXHOOMECLDKXTMUOU\""
+      "etag": "W/\"KXADCFAPHHZOYPOQS\""
     },
     "https://www.haberturk.com/rss/ekonomi.xml": {
-      "etag": "W/\"KXADCFAPHHVLOZMRS\""
+      "etag": "W/\"KXHOOMECLDRMVOUPU\""
     }
   },
   "posted_titles": [
@@ -55,6 +56,10 @@
     [
       "NBA 2K27 Oynanış Fragmanı Paylaşıldı",
       1785308473.9061327
+    ],
+    [
+      "Gornik Zabrze-Fenerbahçe Maçı Hangi Kanaldan Yayınlanacak?",
+      1785310265.8750768
     ]
   ]
 }
