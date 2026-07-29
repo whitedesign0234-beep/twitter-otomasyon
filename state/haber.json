@@ -21,19 +21,20 @@
     "0fa5fd0d2ef33a9a6d93df8bdce433135ec06913ae05a4a325f54e5414906cc5": 1785328268.2226496,
     "c765a3d5da6f65ab06f4b401b58c140d2e7a2f0afc5afe6b456dc482a39cd2b6": 1785330074.947825,
     "2adff2c432634ede5c34dd377e26f16d80469f20f3ebe13fe14daaaa19dfeb25": 1785331863.596527,
-    "842e0c935e4ec39a9afcef19b3316b85d7cf45b55018fd9d6be7e96b25de06c4": 1785333680.0647738
+    "842e0c935e4ec39a9afcef19b3316b85d7cf45b55018fd9d6be7e96b25de06c4": 1785333680.0647738,
+    "0ee3b56e983cd14fc193b12c16c177a29da0ef8db3c3d41fb0e2bb9aad0f29c4": 1785335468.2339969
   },
-  "last_post_ts": 1785333680.0647805,
+  "last_post_ts": 1785335468.234001,
   "feed_meta": {
     "https://www.webtekno.com/rss.xml": {
-      "etag": "W/\"324e9-657c05f7c2c6b\"",
-      "modified": "Wed, 29 Jul 2026 14:00:07 GMT"
+      "etag": "W/\"324e9-657c0c35e3895\"",
+      "modified": "Wed, 29 Jul 2026 14:28:03 GMT"
     },
     "https://www.haberturk.com/rss/yasam.xml": {
       "etag": "W/\"KXADCFAPHHXKWONQS\""
     },
     "https://www.haberturk.com/rss/ekonomi.xml": {
-      "etag": "W/\"KXHOOMECLDUMZPTOU\""
+      "etag": "W/\"KXHOOMECLDOWZQTWV\""
     }
   },
   "posted_titles": [
@@ -120,6 +121,10 @@
     [
       "NASA'nın Teleskobunu Kurtarmak Gönderdiği Robotu Kontrolden Çıktı",
       1785333680.064779
+    ],
+    [
+      "Yüksek Kilometrelerde Bile Tıkır Tıkır Çalışan Otomatik Vitesler",
+      1785335468.2339997
     ]
   ]
 }
