@@ -7,19 +7,20 @@
     "30c37aa7367a487f98ce43dc275df317348c954da205c786b8a9f3bc1207dd6b": 1785301282.3233485,
     "e7b4110a97a90b020912e4356d6c1dd491248d14d8bdc9229e047fbf14b87260": 1785303065.3163161,
     "62b2f4cbc2fca63e8bdad201f7f5a8c4262e1e2d82f1c81c9d62b9dd618ec662": 1785304869.8267212,
-    "da9f3b011feb84cdf042f77f5b36fc0f384180b38d352f412fb009b7ebe3cae4": 1785306665.6612122
+    "da9f3b011feb84cdf042f77f5b36fc0f384180b38d352f412fb009b7ebe3cae4": 1785306665.6612122,
+    "3f45e450fec42d2ade9f54cbaeec2dfcc9e66ff5bd23e6952938ece7c367dc8a": 1785308473.9061296
   },
-  "last_post_ts": 1785306665.6612158,
+  "last_post_ts": 1785308473.9061341,
   "feed_meta": {
     "https://www.webtekno.com/rss.xml": {
-      "etag": "W/\"32d4c-657ba15ee0f88\"",
-      "modified": "Wed, 29 Jul 2026 06:30:03 GMT"
+      "etag": "W/\"32793-657ba817dc8b3\"",
+      "modified": "Wed, 29 Jul 2026 07:00:08 GMT"
     },
     "https://www.haberturk.com/rss/yasam.xml": {
-      "etag": "W/\"KXHOOMECLDQWMXUWV\""
+      "etag": "W/\"KXHOOMECLDKXTMUOU\""
     },
     "https://www.haberturk.com/rss/ekonomi.xml": {
-      "etag": "W/\"KXADCFAPHHSYSSPQS\""
+      "etag": "W/\"KXADCFAPHHVLOZMRS\""
     }
   },
   "posted_titles": [
@@ -50,6 +51,10 @@
     [
       "iPhone Kiralamanızı Sağlayan Yeni Apple Upgrade Programı Duyuruldu",
       1785306665.6612144
+    ],
+    [
+      "NBA 2K27 Oynanış Fragmanı Paylaşıldı",
+      1785308473.9061327
     ]
   ]
 }
