@@ -78,9 +78,11 @@ jobs:
         run: pip install -r requirements.txt
 
       # Video kırpma/kodlama için ffmpeg (Telegram videoları >2 dk ise kırpılır).
-      # Önbellekli kurulum: ilk koşudan sonra hızlıdır.
+      # apt ile güvenilir kurulum. continue-on-error: kurulum aksarsa bile bot
+      # yine çalışır (uzun video kırpılamaz ama haber/kısa video etkilenmez).
       - name: ffmpeg kur
-        uses: FedericoCarboni/setup-ffmpeg@v3
+        continue-on-error: true
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
 
       # NOT: X API kullanıldığı için tarayıcı (Playwright) kurulumu YOK — hızlı.
       # (twitter_browser yöntemine dönersen buraya playwright install eklenir.)
