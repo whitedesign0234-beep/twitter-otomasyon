@@ -40,19 +40,20 @@
     "90bf2309d27e074e405f1b7772c7635a9a4e7ed69cef78e8279f40b982315f40": 1785387676.0795653,
     "3f8416394b27999e044bcb34090da702a490562762411c3c2dd057425c241e39": 1785389477.6901815,
     "aa40edd7baa5fb20083d3f41444113ea90657e9a0d6c734b6bbef4b0fbffdbc1": 1785391265.1147082,
-    "269f15067f83f173cc35f7063efa4d11eac08a716b080210ba530e012d98e3a6": 1785393065.2036083
+    "269f15067f83f173cc35f7063efa4d11eac08a716b080210ba530e012d98e3a6": 1785393065.2036083,
+    "4dfc7c766d684b219b3f2ff5177494ed124be5f15b72bbce765e7d89ad4ac94d": 1785394869.1375518
   },
-  "last_post_ts": 1785393065.203614,
+  "last_post_ts": 1785394869.1375563,
   "feed_meta": {
     "https://www.webtekno.com/rss.xml": {
-      "etag": "W/\"31b17-657ce33c37c91\"",
-      "modified": "Thu, 30 Jul 2026 06:30:03 GMT"
+      "etag": "W/\"31b17-657ce9f323de1\"",
+      "modified": "Thu, 30 Jul 2026 07:00:06 GMT"
     },
     "https://www.haberturk.com/rss/yasam.xml": {
-      "etag": "W/\"KXADCFAPHHLQSKXPS\""
+      "etag": "W/\"KXADCFAPHHSZVQZQS\""
     },
     "https://www.haberturk.com/rss/ekonomi.xml": {
-      "etag": "W/\"KXADCFAPHHTNKRQOS\""
+      "etag": "W/\"KXADCFAPHHMOYTXPS\""
     }
   },
   "posted_titles": [
@@ -215,6 +216,10 @@
     [
       "Yeni Mercedes-Benz GLA Tanıtıldı: 687 km Menzil!",
       1785393065.2036123
+    ],
+    [
+      "MasterChef şampiyonu Eren Kaşıkçı'nın ani ölümü. Kızıyla olan paylaşımları duygulandırdı",
+      1785394869.137555
     ]
   ]
 }
