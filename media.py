@@ -62,15 +62,20 @@ def download_video(url: str, target_dir: Path) -> Path | None:
     return files[0] if files else None
 
 
-def video_title(url: str) -> str:
-    """Linkteki videonun başlığını döndürür (alınamazsa boş metin)."""
+def video_description(url: str) -> str:
+    """Linkteki videonun kaynak açıklamasını (tweet metni/post caption) döndürür.
+
+    Önce %(description)s, boşsa %(title)s denenir. Alınamazsa boş metin döner.
+    """
     result = _run(
-        [*YTDLP_CMD, "--skip-download", "--no-warnings", "--print", "%(title)s", url],
+        [*YTDLP_CMD, "--skip-download", "--no-warnings",
+         "-O", "%(description)s", "-O", "%(title)s", url],
         60,
     )
     if result is None or result.returncode != 0:
         return ""
-    return (result.stdout or "").strip().splitlines()[0][:300] if result.stdout.strip() else ""
+    lines = [ln.strip() for ln in (result.stdout or "").splitlines() if ln.strip() and ln.strip() != "NA"]
+    return lines[0][:1500] if lines else ""
 
 
 def video_duration(path: Path) -> float | None:

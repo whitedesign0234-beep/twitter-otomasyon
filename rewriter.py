@@ -23,6 +23,8 @@ from tenacity import (
     wait_exponential_jitter,
 )
 
+from pathlib import Path
+
 from config.schema import Persona
 from sources.base import ContentItem
 
@@ -33,6 +35,8 @@ X_HARD_LIMIT = 280
 TWITTER_LINK_LENGTH = 23        # X her bağlantıyı 23 karakter sayar (t.co)
 MAX_GEMINI_ATTEMPTS = 3         # kota/hata için toplam deneme
 JSON_FENCE_PATTERN = re.compile(r"^```(?:json)?\s*|\s*```$", re.MULTILINE)
+# Inline (doğrudan) video gönderiminde istek ~20 MB'ı aşamaz; güvenli sınır.
+INLINE_VIDEO_MAX_BYTES = 15 * 1024 * 1024
 
 
 class GeminiTransientError(Exception):
@@ -195,3 +199,90 @@ class Rewriter:
             title = title[: max(budget - 1, 0)].rstrip() + "…"
         base = f"{title}{source_tag}"
         return f"{base} {item.url}" if persona.include_link else base
+
+
+def _build_video_prompt(persona: Persona) -> str:
+    """Video analizi için haber-üslubu, uydurma-yasağı içeren prompt kurar."""
+    return (
+        f"{persona.system_prompt}\n\n"
+        "Bu videoyu izle ve İÇİNDE GERÇEKTEN GÖRDÜĞÜN olayı haber kanalı üslubunda "
+        "tek bir Türkçe açıklamayla anlat. Kurallar:\n"
+        "- SADECE videoda gördüğünü/duyduğunu yaz. Yer adı, kişi, kurum, sayı gibi "
+        "emin olmadığın detayları ASLA uydurma; net değilse genel geç.\n"
+        "- Kısa ve akıcı, tek paragraf. Clickbait ve abartı yok.\n"
+        f"- En fazla {persona.max_chars} karakter.\n"
+        f"- Sonuna konuya uygun {persona.hashtag_count} hashtag ekle.\n"
+        "- Yanıtı düz metin ver (tırnak, markdown veya JSON kullanma)."
+    )
+
+
+def _clean_caption(text: str) -> str:
+    """Model çıktısını temizler: fence, tırnak ve fazla boşlukları atar, kırpar."""
+    cleaned = _strip_fences(text).strip().strip('"').strip()
+    return cleaned[:X_HARD_LIMIT]
+
+
+def caption_from_video(video_path: str, persona: Persona) -> str | None:
+    """Videoyu Gemini ile izleyip haber üslubunda açıklama üretir.
+
+    Video doğrudan (inline) generateContent'e gönderilir — bu, metin üretimiyle
+    aynı çalışan yolu kullanır (File API bazı anahtarlarda reddediliyor). Video
+    inline sınırından büyükse, analiz için ffmpeg ile küçük bir kopya üretilir.
+    Kota/hata durumunda None döner; çağıran taraf metinsiz paylaşır (uydurmaz).
+    """
+    api_key = os.environ.get("GEMINI_API_KEY", "").strip()
+    if not api_key:
+        return None
+    size = Path(video_path).stat().st_size
+    if size > INLINE_VIDEO_MAX_BYTES:
+        logger.info(
+            "Video inline analiz için çok büyük (%d MB) — atlanıyor",
+            size // (1024 * 1024),
+        )
+        return None
+
+    model_name = os.environ.get("GEMINI_MODEL", "gemini-flash-latest").strip()
+    genai.configure(api_key=api_key)
+    try:
+        data = Path(video_path).read_bytes()
+        model = genai.GenerativeModel(model_name)
+        response = model.generate_content(
+            [{"mime_type": "video/mp4", "data": data}, _build_video_prompt(persona)]
+        )
+        caption = _clean_caption(getattr(response, "text", "") or "")
+    except Exception as exc:  # SDK çeşitli istisna tipleri fırlatabilir
+        logger.warning("Gemini video analizi başarısız: %s", str(exc)[:200])
+        return None
+    return caption or None
+
+
+def caption_from_text(source_text: str, persona: Persona) -> str | None:
+    """Kaynak açıklamasından (tweet metni vb.) haber üslubunda metin üretir.
+
+    Metin üretimi kullanır (File API gerektirmez, anahtarla sorunsuz çalışır).
+    Verilen açıklamada olmayan detayı UYDURMAZ; yalnızca düzenler/özetler.
+    """
+    api_key = os.environ.get("GEMINI_API_KEY", "").strip()
+    if not api_key or not source_text.strip():
+        return None
+    model_name = os.environ.get("GEMINI_MODEL", "gemini-flash-latest").strip()
+    genai.configure(api_key=api_key)
+    prompt = (
+        f"{persona.system_prompt}\n\n"
+        "Aşağıdaki metin, paylaşılacak bir videonun KAYNAK AÇIKLAMASIDIR. Bunu temel "
+        "alarak haber üslubunda, kısa ve akıcı tek bir Türkçe açıklama yaz.\n"
+        "- Açıklamada OLMAYAN detayı (yer, kişi, sayı) UYDURMA; sadece verileni "
+        "düzenle/özetle. Emin değilsen genel geç.\n"
+        "- Clickbait ve abartı yok.\n"
+        f"- En fazla {persona.max_chars} karakter, sonuna {persona.hashtag_count} hashtag.\n"
+        "- Düz metin ver (tırnak/JSON yok).\n\n"
+        f"KAYNAK AÇIKLAMA:\n{source_text[:1500]}"
+    )
+    try:
+        model = genai.GenerativeModel(model_name)
+        response = model.generate_content(prompt)
+        caption = _clean_caption(getattr(response, "text", "") or "")
+    except Exception as exc:
+        logger.warning("Gemini metin açıklaması başarısız: %s", str(exc)[:200])
+        return None
+    return caption or None

@@ -8,10 +8,8 @@ import asyncio
 import base64
 import logging
 import os
-import re
 import sys
 import tempfile
-from datetime import datetime, timezone
 from pathlib import Path
 
 import requests
@@ -24,7 +22,7 @@ from config.schema import Profile, SourceConfig, discover_profiles, load_profile
 from publishers.base import DryRunPublisher, Publisher, PostResult
 from publishers.twitter_browser import TwitterBrowserPublisher
 from publishers.x_api import XApiPublisher, read_credentials
-from rewriter import Rewriter
+from rewriter import Rewriter, caption_from_text, caption_from_video
 from selector import posting_blocked, select
 from sources.base import ContentItem
 from sources.registry import create_source
@@ -35,11 +33,7 @@ PROFILES_DIR = Path("profiles")
 SESSION_DIR = Path(".sessions")            # base64'ten çözülen oturum dosyaları
 IMAGE_TIMEOUT_SECONDS = 12
 X_TEXT_LIMIT = 280                         # X'in mutlak metin sınırı
-MIN_TITLE_WORDS = 4                        # bundan kısa başlık "bilgi taşımaz"
-# Platformların otomatik verdiği jenerik başlıklar (içerik hakkında bilgi vermez).
-GENERIC_TITLE_PATTERN = re.compile(
-    r"^(video|reel|post|clip|untitled|img|vid)\b|^video by\b", re.IGNORECASE
-)
+MIN_DESC_WORDS = 4                         # kaynak açıklaması bundan kısaysa kullanma
 EXIT_OK = 0                                # kritik olmayan hata
 EXIT_CONFIG_ERROR = 1                      # yapılandırma hatası
 
@@ -147,39 +141,36 @@ def build_publisher(profile: Profile, dry_run: bool) -> Publisher:
     return TwitterBrowserPublisher(profile.name, session_path, headless=True)
 
 
-def _is_informative_title(title: str) -> bool:
-    """Başlık gerçek bilgi taşıyor mu? ('Video by x' gibi jenerik başlıklar hayır)."""
-    stripped = title.strip()
-    if len(stripped.split()) < MIN_TITLE_WORDS:
-        return False
-    return not GENERIC_TITLE_PATTERN.match(stripped)
+def _telegram_caption(
+    item: telegram_inbox.InboxItem, profile: Profile, video_path: str
+) -> str:
+    """Telegram videosu için paylaşım metnini üretir (öncelikli, uydurmasız).
 
-
-def _telegram_caption(item: telegram_inbox.InboxItem, profile: Profile) -> str:
-    """Telegram öğesi için paylaşım metnini üretir.
-
-    ÖNEMLİ: Model videoyu GÖRMEZ. Bu yüzden metin asla videonun içeriği hakkında
-    uydurulmaz. Sıra: (1) kullanıcının yazdığı açıklama, (2) yalnızca ANLAMLI bir
-    video başlığı varsa ondan üretilen metin, (3) hiçbiri yoksa metinsiz paylaşım.
+    Sıra: (1) kullanıcının Telegram'da yazdığı açıklama; (2) link ise kaynak
+    açıklamasından (tweet metni) haber üslubu üret — güvenilir metin yöntemi;
+    (3) videoyu Gemini'ye izlet (yedek); (4) hiçbiri olmazsa metinsiz.
     """
     log = _plog(profile.name)
     if item.caption:
         return item.caption[:X_TEXT_LIMIT]
 
+    # (2) Kaynak açıklaması (X/TikTok/Instagram post metni) — en güvenilir yol.
     if item.kind == "link":
-        title = media.video_title(item.url or "")
-        if _is_informative_title(title):
-            fake = ContentItem(
-                uid=item.url or "", title=title, summary="", url=item.url or "",
-                image_url=None, published_at=datetime.now(timezone.utc),
-                source_name="Video", weight=1,
-            )
-            return Rewriter().generate(fake, profile.persona).text
-        log.warning(
-            "Video başlığı bilgi taşımıyor (%r) — metin UYDURULMAYACAK, "
-            "videoyu metinsiz paylaşıyorum. Açıklama istiyorsan Telegram'da "
-            "videonun yanına yaz.", title[:40],
-        )
+        source_desc = media.video_description(item.url or "")
+        if len(source_desc.split()) >= MIN_DESC_WORDS:
+            caption = caption_from_text(source_desc, profile.persona)
+            if caption:
+                log.info("Kaynak açıklamasından metin üretildi")
+                return caption
+
+    # (3) Videoyu Gemini'ye izlet (açıklama yoksa / dosya ise).
+    log.info("Kaynak açıklaması yok — video Gemini ile analiz ediliyor")
+    caption = caption_from_video(video_path, profile.persona)
+    if caption:
+        log.info("Video analizinden açıklama üretildi")
+        return caption
+
+    log.warning("Açıklama üretilemedi — metinsiz paylaşılıyor")
     return ""
 
 
@@ -213,7 +204,7 @@ async def _try_telegram_queue(
             store.consume_telegram_update(item.update_id)
             return False
 
-        caption = _telegram_caption(item, profile)
+        caption = _telegram_caption(item, profile, str(ready))
         result = await publisher.publish_video(caption, str(ready))
 
     if result.success:
