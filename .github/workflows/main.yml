@@ -77,6 +77,11 @@ jobs:
       - name: Bağımlılıkları kur
         run: pip install -r requirements.txt
 
+      # Video kırpma/kodlama için ffmpeg (Telegram videoları >2 dk ise kırpılır).
+      # Önbellekli kurulum: ilk koşudan sonra hızlıdır.
+      - name: ffmpeg kur
+        uses: FedericoCarboni/setup-ffmpeg@v3
+
       # NOT: X API kullanıldığı için tarayıcı (Playwright) kurulumu YOK — hızlı.
       # (twitter_browser yöntemine dönersen buraya playwright install eklenir.)
 

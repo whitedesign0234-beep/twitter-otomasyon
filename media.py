@@ -21,7 +21,9 @@ logger = logging.getLogger(__name__)
 YTDLP_CMD = [sys.executable, "-m", "yt_dlp"]
 
 # Sabitler
-X_MAX_VIDEO_SECONDS = 140          # X'in (Premium olmayan) video süre sınırı
+# X (Premium olmayan hesap) 2 dakikadan uzun videoyu reddediyor (403). Güvenli
+# olsun diye 118 sn'ye kırpıyoruz (120'nin biraz altı).
+X_MAX_VIDEO_SECONDS = 118
 DOWNLOAD_TIMEOUT_SECONDS = 240     # tek video indirme üst sınırı
 FFMPEG_TIMEOUT_SECONDS = 300
 # X uyumlu, makul boyutlu mp4 tercih et (720p'ye kadar).
@@ -98,15 +100,20 @@ def video_duration(path: Path) -> float | None:
 
 
 def trim_video(path: Path, seconds: int = X_MAX_VIDEO_SECONDS) -> Path | None:
-    """Videoyu baştan `seconds` kadar kırpar; ffmpeg yoksa None döner."""
+    """Videoyu baştan `seconds` kadar kırpar; ffmpeg yoksa None döner.
+
+    -c copy yerine yeniden kodlar: X uyumlu, keyframe'den başlayan temiz bir mp4
+    üretir (kopyalama kırpması X'te bozuk/oynatılamaz video yapabiliyor).
+    """
     if not shutil.which("ffmpeg"):
         logger.warning("ffmpeg yok — uzun video kırpılamıyor")
         return None
-    output = path.with_name(f"trimmed_{path.name}")
+    output = path.with_name(f"trimmed_{path.stem}.mp4")
     result = _run(
         [
             "ffmpeg", "-y", "-i", str(path), "-t", str(seconds),
-            "-c", "copy", "-movflags", "+faststart", str(output),
+            "-c:v", "libx264", "-preset", "veryfast", "-pix_fmt", "yuv420p",
+            "-c:a", "aac", "-b:a", "128k", "-movflags", "+faststart", str(output),
         ],
         FFMPEG_TIMEOUT_SECONDS,
     )
@@ -117,17 +124,22 @@ def trim_video(path: Path, seconds: int = X_MAX_VIDEO_SECONDS) -> Path | None:
 
 
 def prepare_for_x(path: Path) -> Path | None:
-    """Videoyu X'e uygun hale getirir: süre sınırını aşıyorsa kırpar."""
+    """Videoyu X'e uygun hale getirir: süre sınırını aşıyorsa (veya ölçülemezse) kırpar."""
     duration = video_duration(path)
-    if duration is None:
-        # Süre ölçülemedi (ffprobe yok): olduğu gibi dene, X reddederse loglanır.
-        logger.info("Video süresi ölçülemedi, olduğu gibi denenecek")
-        return path
-    if duration <= X_MAX_VIDEO_SECONDS:
+    if duration is not None and duration <= X_MAX_VIDEO_SECONDS:
         logger.info("Video süresi uygun: %.0f sn", duration)
         return path
-    logger.info(
-        "Video %.0f sn (> %d sn) — ilk %d saniyeye kırpılıyor",
-        duration, X_MAX_VIDEO_SECONDS, X_MAX_VIDEO_SECONDS,
-    )
-    return trim_video(path)
+    if duration is None:
+        # Süre ölçülemedi: X sınırını aşma riskine karşı GÜVENLİ tarafta kalıp
+        # yine de kırpmayı dene (ffmpeg varsa). Böylece 403 (çok uzun) önlenir.
+        logger.info("Video süresi ölçülemedi — güvenlik için %d sn'ye kırpılıyor", X_MAX_VIDEO_SECONDS)
+    else:
+        logger.info(
+            "Video %.0f sn (> %d sn) — ilk %d saniyeye kırpılıyor",
+            duration, X_MAX_VIDEO_SECONDS, X_MAX_VIDEO_SECONDS,
+        )
+    trimmed = trim_video(path)
+    # ffmpeg yoksa kırpılamaz; süre biliniyor ve uygunsa orijinali döndür, değilse None.
+    if trimmed is None:
+        return path if (duration is not None and duration <= X_MAX_VIDEO_SECONDS) else None
+    return trimmed
