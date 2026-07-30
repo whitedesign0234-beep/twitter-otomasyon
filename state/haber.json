@@ -55,19 +55,20 @@
     "dca011273774dec69bf16f80236c55976fb767fb47f8059302c4684024c06df9": 1785414666.3701172,
     "179dba3ad603daffe36c4e0dee2e82be5ed1420b4299441f7456a79eeb31775d": 1785416464.424795,
     "3ea5d30915d0450339c373eccf59b50c96c0befea91d32146202ded96addec75": 1785418270.1827328,
-    "ad949ed9fb5eb8898d131e589d6e3c70a70834506accf571aa6be2e49a140772": 1785420067.4630907
+    "ad949ed9fb5eb8898d131e589d6e3c70a70834506accf571aa6be2e49a140772": 1785420067.4630907,
+    "96263ffa6c67c9156abb47b77930d7b2f80682994b33acf9e5ed80a8ef9e7278": 1785430914.4930975
   },
-  "last_post_ts": 1785429076.4149797,
+  "last_post_ts": 1785430914.493102,
   "feed_meta": {
     "https://www.webtekno.com/rss.xml": {
-      "etag": "W/\"31c78-657d47d6c0f76\"",
-      "modified": "Thu, 30 Jul 2026 14:00:09 GMT"
+      "etag": "W/\"31f12-657d700f2805f\"",
+      "modified": "Thu, 30 Jul 2026 17:00:05 GMT"
     },
     "https://www.haberturk.com/rss/yasam.xml": {
-      "etag": "W/\"KXADCFAPHHRXOQVPS\""
+      "etag": "W/\"KXHOOMECLDMTTWRPU\""
     },
     "https://www.haberturk.com/rss/ekonomi.xml": {
-      "etag": "W/\"KXADCFAPHHYLYTSRU\""
+      "etag": "W/\"KXADCFAPHHQRPPMQS\""
     }
   },
   "posted_titles": [
@@ -290,6 +291,10 @@
     [
       "OpenAI, Bilim İnsanlarının Ücretsiz Yapay Zekâ Modellerine Erişmesine İzin Verecek",
       1785420067.4630938
+    ],
+    [
+      "[30 Temmuz-6 Ağustos] Toplam Değeri 400 TL Olan İki Oyun Epic Games'te Ücretsiz Oldu",
+      1785430914.4931006
     ]
   ],
   "telegram_offset": 84323359
