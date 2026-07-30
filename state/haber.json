@@ -52,19 +52,20 @@
     "ec91f71d168c5035ebd48d94cdb922ee5ad59d8aeab76041971e51fe18202146": 1785409273.8674407,
     "301731dd8e13cda0b74cd0b9d1ef2f5b9c1d4cf92cb993eb777ea080e39a118e": 1785411052.388972,
     "f8316f5859807104a64e9cec5d89b888700ba2d746a959d9ca9b4a32652d1df1": 1785412868.9434702,
-    "dca011273774dec69bf16f80236c55976fb767fb47f8059302c4684024c06df9": 1785414666.3701172
+    "dca011273774dec69bf16f80236c55976fb767fb47f8059302c4684024c06df9": 1785414666.3701172,
+    "179dba3ad603daffe36c4e0dee2e82be5ed1420b4299441f7456a79eeb31775d": 1785416464.424795
   },
-  "last_post_ts": 1785414666.370122,
+  "last_post_ts": 1785416464.4247997,
   "feed_meta": {
     "https://www.webtekno.com/rss.xml": {
-      "etag": "W/\"3116a-657d33b33bbf8\"",
-      "modified": "Thu, 30 Jul 2026 12:30:03 GMT"
+      "etag": "W/\"31c6d-657d3a6bc1920\"",
+      "modified": "Thu, 30 Jul 2026 13:00:07 GMT"
     },
     "https://www.haberturk.com/rss/yasam.xml": {
-      "etag": "W/\"KXHOOMECLDMLOXOPU\""
+      "etag": "W/\"KXADCFAPHHWQKUVPS\""
     },
     "https://www.haberturk.com/rss/ekonomi.xml": {
-      "etag": "W/\"KXHOOMECLDNUXSTOU\""
+      "etag": "W/\"KXHOOMECLDPOOKPOU\""
     }
   },
   "posted_titles": [
@@ -275,6 +276,10 @@
     [
       "Bir Skyrim Oyuncusu, Kullanıcı Adındaki \"Çift Alt Çizgi\" Yüzünden 18 Ay Hapiste Kaldı",
       1785414666.3701208
+    ],
+    [
+      "Güncel Bir Volkswagen Modeli Kullanıyorsanız Dikkat Etmeniz Gerekenler",
+      1785416464.424798
     ]
   ]
 }
