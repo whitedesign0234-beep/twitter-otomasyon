@@ -41,19 +41,20 @@
     "3f8416394b27999e044bcb34090da702a490562762411c3c2dd057425c241e39": 1785389477.6901815,
     "aa40edd7baa5fb20083d3f41444113ea90657e9a0d6c734b6bbef4b0fbffdbc1": 1785391265.1147082,
     "269f15067f83f173cc35f7063efa4d11eac08a716b080210ba530e012d98e3a6": 1785393065.2036083,
-    "4dfc7c766d684b219b3f2ff5177494ed124be5f15b72bbce765e7d89ad4ac94d": 1785394869.1375518
+    "4dfc7c766d684b219b3f2ff5177494ed124be5f15b72bbce765e7d89ad4ac94d": 1785394869.1375518,
+    "a138b470c17b8c619f9b3efd4844dc776713e36c1cc0aeb49c0cf04bcf84159b": 1785396660.6095529
   },
-  "last_post_ts": 1785394869.1375563,
+  "last_post_ts": 1785396660.6095595,
   "feed_meta": {
     "https://www.webtekno.com/rss.xml": {
-      "etag": "W/\"31b17-657ce9f323de1\"",
-      "modified": "Thu, 30 Jul 2026 07:00:06 GMT"
+      "etag": "W/\"31b17-657cf0a512cf1\"",
+      "modified": "Thu, 30 Jul 2026 07:30:03 GMT"
     },
     "https://www.haberturk.com/rss/yasam.xml": {
-      "etag": "W/\"KXADCFAPHHSZVQZQS\""
+      "etag": "W/\"KXADCFAPHHWRVRLRS\""
     },
     "https://www.haberturk.com/rss/ekonomi.xml": {
-      "etag": "W/\"KXADCFAPHHMOYTXPS\""
+      "etag": "W/\"KXADCFAPHHUUPRXPS\""
     }
   },
   "posted_titles": [
@@ -220,6 +221,10 @@
     [
       "MasterChef şampiyonu Eren Kaşıkçı'nın ani ölümü. Kızıyla olan paylaşımları duygulandırdı",
       1785394869.137555
+    ],
+    [
+      "TÜİK açıkladı: İşsizlikte düşüş",
+      1785396660.6095583
     ]
   ]
 }
