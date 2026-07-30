@@ -50,19 +50,20 @@
     "2960211b26e4fe97c3ac13fc3dcb8975e0c2b24160cb2cc638c97fefcb34d382": 1785405674.5948238,
     "0187774ece60aca0bf2fb4f0edd81618917635bccbd46a8e0bfeeee30551e53d": 1785407458.818138,
     "ec91f71d168c5035ebd48d94cdb922ee5ad59d8aeab76041971e51fe18202146": 1785409273.8674407,
-    "301731dd8e13cda0b74cd0b9d1ef2f5b9c1d4cf92cb993eb777ea080e39a118e": 1785411052.388972
+    "301731dd8e13cda0b74cd0b9d1ef2f5b9c1d4cf92cb993eb777ea080e39a118e": 1785411052.388972,
+    "f8316f5859807104a64e9cec5d89b888700ba2d746a959d9ca9b4a32652d1df1": 1785412868.9434702
   },
-  "last_post_ts": 1785411052.388976,
+  "last_post_ts": 1785412868.9434748,
   "feed_meta": {
     "https://www.webtekno.com/rss.xml": {
-      "etag": "W/\"306d9-657d25d8171d1\"",
-      "modified": "Thu, 30 Jul 2026 11:28:03 GMT"
+      "etag": "W/\"306d9-657d2d0271592\"",
+      "modified": "Thu, 30 Jul 2026 12:00:07 GMT"
     },
     "https://www.haberturk.com/rss/yasam.xml": {
-      "etag": "W/\"KXHOOMECLDOTYMRWV\""
+      "etag": "W/\"KXHOOMECLDLSQKUOU\""
     },
     "https://www.haberturk.com/rss/ekonomi.xml": {
-      "etag": "W/\"KXHOOMECLDWVMVRPU\""
+      "etag": "W/\"KXADCFAPHHNOQROOS\""
     }
   },
   "posted_titles": [
@@ -265,6 +266,10 @@
     [
       "Gemini Omni Ücretsiz Erişim Fırsatı Başladı: Günlük 10 Video Üretebileceksiniz!",
       1785411052.3889751
+    ],
+    [
+      "Ferrari Luce, 2 Ayda Yıllık Satış Hedefini Geçti",
+      1785412868.943473
     ]
   ]
 }
