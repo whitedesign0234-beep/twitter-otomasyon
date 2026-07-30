@@ -46,19 +46,20 @@
     "e6c168cf60566a9bc15800595dd6af309d79859a5c5d8a2d4cc9e673ad181d35": 1785398384.9119303,
     "13c27aa0df47d8c0f4dd9f4f2b4c0eaf61dc8820e63e893ae26cd056d4a6e653": 1785400257.2687786,
     "545dcb8338ffa37a601e76c7858f255c797e14bfd45e0b02c70ae22ad6a221ee": 1785402074.6878533,
-    "4215486866f782a09f13e71c775a4d0f8811c48eb339be0314a46f44200b8499": 1785403865.5478926
+    "4215486866f782a09f13e71c775a4d0f8811c48eb339be0314a46f44200b8499": 1785403865.5478926,
+    "2960211b26e4fe97c3ac13fc3dcb8975e0c2b24160cb2cc638c97fefcb34d382": 1785405674.5948238
   },
-  "last_post_ts": 1785403865.5478969,
+  "last_post_ts": 1785405674.5948281,
   "feed_meta": {
     "https://www.webtekno.com/rss.xml": {
-      "etag": "W/\"2fcb5-657d0b771132e\"",
-      "modified": "Thu, 30 Jul 2026 09:30:02 GMT"
+      "etag": "W/\"2fcb5-657d1265c395f\"",
+      "modified": "Thu, 30 Jul 2026 10:01:03 GMT"
     },
     "https://www.haberturk.com/rss/yasam.xml": {
-      "etag": "W/\"KXADCFAPHHTMMKVQS\""
+      "etag": "W/\"KXHOOMECLDTMPZQWV\""
     },
     "https://www.haberturk.com/rss/ekonomi.xml": {
-      "etag": "W/\"KXADCFAPHHOOUKRPS\""
+      "etag": "W/\"KXHOOMECLDQLLXSOU\""
     }
   },
   "posted_titles": [
@@ -245,6 +246,10 @@
     [
       "Midtjylland-Beşiktaş Maçı Hangi Kanaldan Yayınlanacak?",
       1785403865.5478957
+    ],
+    [
+      "Ülkemizde Satılan En Sağlam Plug-in hybrid Motorlar",
+      1785405674.5948267
     ]
   ]
 }
