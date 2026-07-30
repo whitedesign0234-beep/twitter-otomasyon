@@ -49,19 +49,20 @@
     "4215486866f782a09f13e71c775a4d0f8811c48eb339be0314a46f44200b8499": 1785403865.5478926,
     "2960211b26e4fe97c3ac13fc3dcb8975e0c2b24160cb2cc638c97fefcb34d382": 1785405674.5948238,
     "0187774ece60aca0bf2fb4f0edd81618917635bccbd46a8e0bfeeee30551e53d": 1785407458.818138,
-    "ec91f71d168c5035ebd48d94cdb922ee5ad59d8aeab76041971e51fe18202146": 1785409273.8674407
+    "ec91f71d168c5035ebd48d94cdb922ee5ad59d8aeab76041971e51fe18202146": 1785409273.8674407,
+    "301731dd8e13cda0b74cd0b9d1ef2f5b9c1d4cf92cb993eb777ea080e39a118e": 1785411052.388972
   },
-  "last_post_ts": 1785409273.867444,
+  "last_post_ts": 1785411052.388976,
   "feed_meta": {
     "https://www.webtekno.com/rss.xml": {
-      "etag": "W/\"30525-657d1f9a38484\"",
-      "modified": "Thu, 30 Jul 2026 11:00:08 GMT"
+      "etag": "W/\"306d9-657d25d8171d1\"",
+      "modified": "Thu, 30 Jul 2026 11:28:03 GMT"
     },
     "https://www.haberturk.com/rss/yasam.xml": {
-      "etag": "W/\"KXHOOMECLDTMPZQWV\""
+      "etag": "W/\"KXHOOMECLDOTYMRWV\""
     },
     "https://www.haberturk.com/rss/ekonomi.xml": {
-      "etag": "W/\"KXADCFAPHHMLURSQS\""
+      "etag": "W/\"KXHOOMECLDWVMVRPU\""
     }
   },
   "posted_titles": [
@@ -260,6 +261,10 @@
     [
       "Renault Boreal Hakkında İlk Şikayetler Neler, Alırsanız Sorun Yaşatır mı?",
       1785409273.8674428
+    ],
+    [
+      "Gemini Omni Ücretsiz Erişim Fırsatı Başladı: Günlük 10 Video Üretebileceksiniz!",
+      1785411052.3889751
     ]
   ]
 }
