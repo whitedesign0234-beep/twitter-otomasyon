@@ -38,19 +38,20 @@
     "f9e108d6ff627ccc88ea3b78590441e0fb4635d476338415e922f3dd28895958": 1785360664.9118123,
     "01214053d546207175c550c16012d9189290f5736a782bf79a1932ad55aedda4": 1785385857.9254262,
     "90bf2309d27e074e405f1b7772c7635a9a4e7ed69cef78e8279f40b982315f40": 1785387676.0795653,
-    "3f8416394b27999e044bcb34090da702a490562762411c3c2dd057425c241e39": 1785389477.6901815
+    "3f8416394b27999e044bcb34090da702a490562762411c3c2dd057425c241e39": 1785389477.6901815,
+    "aa40edd7baa5fb20083d3f41444113ea90657e9a0d6c734b6bbef4b0fbffdbc1": 1785391265.1147082
   },
-  "last_post_ts": 1785389477.6901853,
+  "last_post_ts": 1785391265.1147132,
   "feed_meta": {
     "https://www.webtekno.com/rss.xml": {
-      "etag": "W/\"31b38-657cd5d24a99a\"",
-      "modified": "Thu, 30 Jul 2026 05:30:02 GMT"
+      "etag": "W/\"31b17-657cdc8b0292d\"",
+      "modified": "Thu, 30 Jul 2026 06:00:07 GMT"
     },
     "https://www.haberturk.com/rss/yasam.xml": {
-      "etag": "W/\"KXADCFAPHHLQSKXPS\""
+      "etag": "W/\"KXADCFAPHHXQTPZQS\""
     },
     "https://www.haberturk.com/rss/ekonomi.xml": {
-      "etag": "W/\"KXADCFAPHHTKPZQPS\""
+      "etag": "W/\"KXHOOMECLDSSYTTOU\""
     }
   },
   "posted_titles": [
@@ -205,6 +206,10 @@
     [
       "Telegram Kurucusu İçin Tutuklama Kararı: \"Teröre Destek Oluyor\"",
       1785389477.690184
+    ],
+    [
+      "Akıllı Telefonlara Büyük Zam Yolda!",
+      1785391265.1147118
     ]
   ]
 }
