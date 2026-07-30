@@ -25,6 +25,7 @@ from tenacity import (
 
 from pathlib import Path
 
+import trends
 from config.schema import Persona
 from sources.base import ContentItem
 
@@ -201,6 +202,21 @@ class Rewriter:
         return f"{base} {item.url}" if persona.include_link else base
 
 
+def _trends_hint() -> str:
+    """Güncel X gündemini, yalnızca İLGİLİ olanları eklemek koşuluyla prompt'a katar."""
+    current = trends.get_trends()
+    if not current:
+        return ""
+    listing = ", ".join(current[:15])
+    return (
+        f"\n\nBUGÜNÜN X (Twitter) GÜNDEMİ: {listing}\n"
+        "Bu gündem başlıklarından, içerikle GERÇEKTEN İLGİLİ olan EN FAZLA 2 tanesini "
+        "ek hashtag olarak koyabilirsin (çok kelimeliyse bitişik yaz, ör. #RealMadrid). "
+        "Alakasız gündem etiketi EKLEME — spam sayılır ve hesaba zarar verir. "
+        "İçerikle ilgili gündem yoksa hiç ekleme."
+    )
+
+
 def _build_video_prompt(persona: Persona) -> str:
     """Video analizi için haber-üslubu, uydurma-yasağı içeren prompt kurar."""
     return (
@@ -213,6 +229,7 @@ def _build_video_prompt(persona: Persona) -> str:
         f"- En fazla {persona.max_chars} karakter.\n"
         f"- Sonuna konuya uygun {persona.hashtag_count} hashtag ekle.\n"
         "- Yanıtı düz metin ver (tırnak, markdown veya JSON kullanma)."
+        + _trends_hint()
     )
 
 
@@ -275,8 +292,9 @@ def caption_from_text(source_text: str, persona: Persona) -> str | None:
         "düzenle/özetle. Emin değilsen genel geç.\n"
         "- Clickbait ve abartı yok.\n"
         f"- En fazla {persona.max_chars} karakter, sonuna {persona.hashtag_count} hashtag.\n"
-        "- Düz metin ver (tırnak/JSON yok).\n\n"
-        f"KAYNAK AÇIKLAMA:\n{source_text[:1500]}"
+        "- Düz metin ver (tırnak/JSON yok)."
+        + _trends_hint()
+        + f"\n\nKAYNAK AÇIKLAMA:\n{source_text[:1500]}"
     )
     try:
         model = genai.GenerativeModel(model_name)
