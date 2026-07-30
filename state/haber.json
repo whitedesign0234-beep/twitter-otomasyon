@@ -35,19 +35,20 @@
     "2bac2d575faf9059d60144fb0d1b63361be053e2db61c7a7364ba7479bdef2a8": 1785353476.1776648,
     "3e62c8f3224fd3feed57976c80cf26e9e6040dfe0793711cabca0a1178e20f1a": 1785355271.143588,
     "3c3dbb3cc36b3c3ecc522a98a0e6abf05f4fd99fedac6b2599813a0363fe4792": 1785358865.7675705,
-    "f9e108d6ff627ccc88ea3b78590441e0fb4635d476338415e922f3dd28895958": 1785360664.9118123
+    "f9e108d6ff627ccc88ea3b78590441e0fb4635d476338415e922f3dd28895958": 1785360664.9118123,
+    "01214053d546207175c550c16012d9189290f5736a782bf79a1932ad55aedda4": 1785385857.9254262
   },
-  "last_post_ts": 1785360664.9118166,
+  "last_post_ts": 1785385857.92543,
   "feed_meta": {
     "https://www.webtekno.com/rss.xml": {
-      "etag": "W/\"31a30-657c6a89318a4\"",
-      "modified": "Wed, 29 Jul 2026 21:30:03 GMT"
+      "etag": "W/\"31409-657cc869d3524\"",
+      "modified": "Thu, 30 Jul 2026 04:30:03 GMT"
     },
     "https://www.haberturk.com/rss/yasam.xml": {
-      "etag": "W/\"KXHOOMECLDOYKRSWV\""
+      "etag": "W/\"KXHOOMECLDYYKYXOU\""
     },
     "https://www.haberturk.com/rss/ekonomi.xml": {
-      "etag": "W/\"KXADCFAPHHROLSWQS\""
+      "etag": "W/\"KXADCFAPHHZUULROS\""
     }
   },
   "posted_titles": [
@@ -190,6 +191,10 @@
     [
       "Eren Kaşıkçı'ya MasterChef'teki arkadaşlarından veda. \"Ölüm hiç yakışmadı\"",
       1785360664.9118154
+    ],
+    [
+      "Türkiye'de Üretilecek Hyundai IONIQ 3'ün Avrupa Fiyatı Belli Oldu",
+      1785385857.9254286
     ]
   ]
 }
