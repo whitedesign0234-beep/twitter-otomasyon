@@ -27,6 +27,10 @@ class Publisher(Protocol):
         """Metni (ve varsa görseli) yayınlar; PostResult döndürür."""
         ...
 
+    async def publish_video(self, text: str, video_path: str) -> PostResult:
+        """Metni video ekiyle yayınlar; PostResult döndürür."""
+        ...
+
 
 class DryRunPublisher:
     """Hiçbir şey paylaşmaz; yalnızca ne yapılacağını loglar (güvenli test)."""
@@ -35,6 +39,11 @@ class DryRunPublisher:
         """Paylaşımı simüle eder ve içeriği loga yazar."""
         logger.info("[DRY-RUN] Paylaşılacaktı (görsel=%s):\n%s", image_path, text)
         return PostResult(success=True, detail="dry-run")
+
+    async def publish_video(self, text: str, video_path: str) -> PostResult:
+        """Video paylaşımını simüle eder ve içeriği loga yazar."""
+        logger.info("[DRY-RUN] VİDEO paylaşılacaktı (%s):\n%s", video_path, text)
+        return PostResult(success=True, detail="dry-run-video")
 
 
 class BlueskyPublisher:

@@ -48,14 +48,57 @@ class XApiPublisher:
         """Tweet'i gönderir; tweepy senkron olduğu için ayrı thread'de çalıştırır."""
         return await asyncio.to_thread(self._publish_sync, text, image_path)
 
-    def _publish_sync(self, text: str, image_path: str | None) -> PostResult:
-        """Senkron paylaşım akışı: (varsa) görsel yükle, sonra tweet oluştur."""
-        client = tweepy.Client(
+    async def publish_video(self, text: str, video_path: str) -> PostResult:
+        """Videolu tweet'i gönderir (parçalı yükleme ayrı thread'de)."""
+        return await asyncio.to_thread(self._publish_video_sync, text, video_path)
+
+    def _publish_video_sync(self, text: str, video_path: str) -> PostResult:
+        """Videoyu chunked upload ile yükler, işlenmesini bekler ve paylaşır."""
+        try:
+            auth = tweepy.OAuth1UserHandler(
+                self._creds["X_API_KEY"],
+                self._creds["X_API_SECRET"],
+                self._creds["X_ACCESS_TOKEN"],
+                self._creds["X_ACCESS_TOKEN_SECRET"],
+            )
+            api_v1 = tweepy.API(auth)
+            # Video büyük olduğundan parçalı yükleme + async işleme beklenir.
+            media = api_v1.media_upload(
+                filename=video_path,
+                chunked=True,
+                media_category="tweet_video",
+                wait_for_async_finalize=True,
+            )
+        except tweepy.TweepyException as exc:
+            return PostResult(success=False, detail=f"Video yüklenemedi: {exc}")
+
+        try:
+            response = self._client().create_tweet(text=text, media_ids=[media.media_id])
+        except tweepy.TooManyRequests:
+            return PostResult(success=False, detail="Kota doldu (429)")
+        except tweepy.Unauthorized:
+            return PostResult(
+                success=False, detail="API anahtarları geçersiz (401)", session_invalid=True
+            )
+        except tweepy.TweepyException as exc:
+            return PostResult(success=False, detail=f"Videolu tweet hatası: {exc}")
+
+        tweet_id = response.data.get("id") if response and response.data else None
+        logger.info("[%s] videolu tweet gönderildi (id=%s)", self.profile_name, tweet_id)
+        return PostResult(success=True, detail=f"tweet_id={tweet_id}")
+
+    def _client(self) -> tweepy.Client:
+        """Yapılandırılmış tweepy v2 istemcisini üretir."""
+        return tweepy.Client(
             consumer_key=self._creds["X_API_KEY"],
             consumer_secret=self._creds["X_API_SECRET"],
             access_token=self._creds["X_ACCESS_TOKEN"],
             access_token_secret=self._creds["X_ACCESS_TOKEN_SECRET"],
         )
+
+    def _publish_sync(self, text: str, image_path: str | None) -> PostResult:
+        """Senkron paylaşım akışı: (varsa) görsel yükle, sonra tweet oluştur."""
+        client = self._client()
 
         kwargs: dict = {"text": text}
         if image_path:

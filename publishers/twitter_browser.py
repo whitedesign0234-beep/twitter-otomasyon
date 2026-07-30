@@ -71,6 +71,11 @@ class TwitterBrowserPublisher:
         self.storage_state_path = storage_state_path
         self.headless = headless
 
+    async def publish_video(self, text: str, video_path: str) -> PostResult:
+        """Tarayıcı yönteminde video paylaşımı desteklenmez (API kullanın)."""
+        logger.warning("[%s] tarayıcı yayıncısı video desteklemiyor", self.profile_name)
+        return PostResult(success=False, detail="video-not-supported-in-browser")
+
     async def publish(self, text: str, image_path: str | None) -> PostResult:
         """İzole bir tarayıcı bağlamında tweet'i gönderir."""
         if not self.storage_state_path.exists():

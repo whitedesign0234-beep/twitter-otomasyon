@@ -66,6 +66,8 @@ class ProfileState:
     feed_meta: dict[str, dict[str, str]] = field(default_factory=dict)  # url -> {etag,...}
     # Yakında PAYLAŞILAN başlıklar: [[başlık, ts], ...] — konu bazlı mükerrer önleme.
     posted_titles: list = field(default_factory=list)
+    # Telegram kuyruğunda tüketilen son update_id (yalnızca başarılı paylaşımda artar).
+    telegram_offset: int = 0
 
 
 class StateStore:
@@ -89,6 +91,7 @@ class StateStore:
                 last_post_ts=float(data.get("last_post_ts", 0.0)),
                 feed_meta=dict(data.get("feed_meta", {})),
                 posted_titles=list(data.get("posted_titles", [])),
+                telegram_offset=int(data.get("telegram_offset", 0)),
             )
         except (json.JSONDecodeError, ValueError, OSError) as exc:
             logger.warning("State okunamadı (%s), sıfırdan başlanıyor: %s", self.path, exc)
@@ -119,6 +122,15 @@ class StateStore:
         """TTL içinde paylaşılmış başlıkların listesini döndürür."""
         cutoff = time.time() - self.ttl_seconds
         return [t for t, ts in self.state.posted_titles if ts >= cutoff]
+
+    @property
+    def telegram_offset(self) -> int:
+        """Telegram kuyruğunda tüketilen son update_id."""
+        return self.state.telegram_offset
+
+    def consume_telegram_update(self, update_id: int) -> None:
+        """Telegram öğesini tüketilmiş işaretler (başarılı paylaşım sonrası)."""
+        self.state.telegram_offset = max(self.state.telegram_offset, update_id)
 
     def get_feed_meta(self, feed_url: str) -> dict[str, str]:
         """Feed için saklı ETag/Last-Modified başlıklarını döndürür."""
@@ -156,6 +168,7 @@ class StateStore:
             "last_post_ts": self.state.last_post_ts,
             "feed_meta": self.state.feed_meta,
             "posted_titles": self.state.posted_titles,
+            "telegram_offset": self.state.telegram_offset,
         }
         tmp = self.path.with_suffix(".json.tmp")
         tmp.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")

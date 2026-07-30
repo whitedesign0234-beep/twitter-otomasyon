@@ -8,14 +8,18 @@ import asyncio
 import base64
 import logging
 import os
+import re
 import sys
 import tempfile
+from datetime import datetime, timezone
 from pathlib import Path
 
 import requests
 from dotenv import load_dotenv
 
+import media
 import sources  # noqa: F401  (yan etki: kaynak eklentilerini registry'ye kaydeder)
+import telegram_inbox
 from config.schema import Profile, SourceConfig, discover_profiles, load_profile
 from publishers.base import DryRunPublisher, Publisher, PostResult
 from publishers.twitter_browser import TwitterBrowserPublisher
@@ -30,6 +34,12 @@ from store import StateStore
 PROFILES_DIR = Path("profiles")
 SESSION_DIR = Path(".sessions")            # base64'ten çözülen oturum dosyaları
 IMAGE_TIMEOUT_SECONDS = 12
+X_TEXT_LIMIT = 280                         # X'in mutlak metin sınırı
+MIN_TITLE_WORDS = 4                        # bundan kısa başlık "bilgi taşımaz"
+# Platformların otomatik verdiği jenerik başlıklar (içerik hakkında bilgi vermez).
+GENERIC_TITLE_PATTERN = re.compile(
+    r"^(video|reel|post|clip|untitled|img|vid)\b|^video by\b", re.IGNORECASE
+)
 EXIT_OK = 0                                # kritik olmayan hata
 EXIT_CONFIG_ERROR = 1                      # yapılandırma hatası
 
@@ -137,6 +147,85 @@ def build_publisher(profile: Profile, dry_run: bool) -> Publisher:
     return TwitterBrowserPublisher(profile.name, session_path, headless=True)
 
 
+def _is_informative_title(title: str) -> bool:
+    """Başlık gerçek bilgi taşıyor mu? ('Video by x' gibi jenerik başlıklar hayır)."""
+    stripped = title.strip()
+    if len(stripped.split()) < MIN_TITLE_WORDS:
+        return False
+    return not GENERIC_TITLE_PATTERN.match(stripped)
+
+
+def _telegram_caption(item: telegram_inbox.InboxItem, profile: Profile) -> str:
+    """Telegram öğesi için paylaşım metnini üretir.
+
+    ÖNEMLİ: Model videoyu GÖRMEZ. Bu yüzden metin asla videonun içeriği hakkında
+    uydurulmaz. Sıra: (1) kullanıcının yazdığı açıklama, (2) yalnızca ANLAMLI bir
+    video başlığı varsa ondan üretilen metin, (3) hiçbiri yoksa metinsiz paylaşım.
+    """
+    log = _plog(profile.name)
+    if item.caption:
+        return item.caption[:X_TEXT_LIMIT]
+
+    if item.kind == "link":
+        title = media.video_title(item.url or "")
+        if _is_informative_title(title):
+            fake = ContentItem(
+                uid=item.url or "", title=title, summary="", url=item.url or "",
+                image_url=None, published_at=datetime.now(timezone.utc),
+                source_name="Video", weight=1,
+            )
+            return Rewriter().generate(fake, profile.persona).text
+        log.warning(
+            "Video başlığı bilgi taşımıyor (%r) — metin UYDURULMAYACAK, "
+            "videoyu metinsiz paylaşıyorum. Açıklama istiyorsan Telegram'da "
+            "videonun yanına yaz.", title[:40],
+        )
+    return ""
+
+
+async def _try_telegram_queue(
+    profile: Profile, store: StateStore, publisher: Publisher
+) -> bool:
+    """Telegram kuyruğundaki ilk öğeyi paylaşır; paylaştıysa True döner."""
+    log = _plog(profile.name)
+    items = telegram_inbox.pending_items(store.telegram_offset)
+    if not items:
+        return False
+
+    item = items[0]  # en eski öğe (FIFO kuyruk)
+    with tempfile.TemporaryDirectory(prefix=f"tg_{profile.name}_") as workdir:
+        target = Path(workdir)
+        if item.kind == "video":
+            raw = telegram_inbox.download_file(item.file_id or "", workdir)
+            video = Path(raw) if raw else None
+        else:
+            log.info("Telegram linki indiriliyor")
+            video = media.download_video(item.url or "", target)
+
+        if video is None:
+            log.warning("Telegram öğesi indirilemedi — tüketilip atlanıyor")
+            store.consume_telegram_update(item.update_id)
+            return False
+
+        ready = media.prepare_for_x(video)
+        if ready is None:
+            log.warning("Video X'e uygun hale getirilemedi — tüketilip atlanıyor")
+            store.consume_telegram_update(item.update_id)
+            return False
+
+        caption = _telegram_caption(item, profile)
+        result = await publisher.publish_video(caption, str(ready))
+
+    if result.success:
+        store.consume_telegram_update(item.update_id)
+        store.set_last_post_now()
+        log.info("Telegram videosu paylaşıldı")
+        return True
+
+    log.warning("Telegram videosu paylaşılamadı: %s", result.detail)
+    return False  # offset ilerlemez: sonraki koşuda tekrar denenir
+
+
 async def run_profile(profile: Profile, args: argparse.Namespace) -> None:
     """Tek bir profilin uçtan uca akışını yürütür (hataları içeride yakalar)."""
     log = _plog(profile.name)
@@ -157,6 +246,16 @@ async def run_profile(profile: Profile, args: argparse.Namespace) -> None:
             log.info("Paylaşım penceresi kapalı (%s) — atlanıyor", reason)
             return
 
+    publisher = build_publisher(profile, dry_run=args.dry_run)
+
+    # ÖNCELİK 1: Telegram kuyruğu (kullanıcının telefondan gönderdiği video).
+    # Kuyrukta öğe varsa bu koşuda haber yerine o paylaşılır.
+    if await _try_telegram_queue(profile, store, publisher):
+        if persist:
+            store.save()
+        return
+
+    # ÖNCELİK 2: Normal haber akışı (metin + görsel).
     candidates = fetch_all_sources(profile, store, args.source)
     chosen = select(profile, candidates, store, ignore_schedule=args.ignore_schedule)
     if args.limit is not None:
@@ -168,7 +267,6 @@ async def run_profile(profile: Profile, args: argparse.Namespace) -> None:
         return
 
     rewriter = Rewriter()
-    publisher = build_publisher(profile, dry_run=args.dry_run)
 
     for item in chosen:
         post = rewriter.generate(item, profile.persona)
