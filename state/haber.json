@@ -51,19 +51,20 @@
     "0187774ece60aca0bf2fb4f0edd81618917635bccbd46a8e0bfeeee30551e53d": 1785407458.818138,
     "ec91f71d168c5035ebd48d94cdb922ee5ad59d8aeab76041971e51fe18202146": 1785409273.8674407,
     "301731dd8e13cda0b74cd0b9d1ef2f5b9c1d4cf92cb993eb777ea080e39a118e": 1785411052.388972,
-    "f8316f5859807104a64e9cec5d89b888700ba2d746a959d9ca9b4a32652d1df1": 1785412868.9434702
+    "f8316f5859807104a64e9cec5d89b888700ba2d746a959d9ca9b4a32652d1df1": 1785412868.9434702,
+    "dca011273774dec69bf16f80236c55976fb767fb47f8059302c4684024c06df9": 1785414666.3701172
   },
-  "last_post_ts": 1785412868.9434748,
+  "last_post_ts": 1785414666.370122,
   "feed_meta": {
     "https://www.webtekno.com/rss.xml": {
-      "etag": "W/\"306d9-657d2d0271592\"",
-      "modified": "Thu, 30 Jul 2026 12:00:07 GMT"
+      "etag": "W/\"3116a-657d33b33bbf8\"",
+      "modified": "Thu, 30 Jul 2026 12:30:03 GMT"
     },
     "https://www.haberturk.com/rss/yasam.xml": {
-      "etag": "W/\"KXHOOMECLDLSQKUOU\""
+      "etag": "W/\"KXHOOMECLDMLOXOPU\""
     },
     "https://www.haberturk.com/rss/ekonomi.xml": {
-      "etag": "W/\"KXADCFAPHHNOQROOS\""
+      "etag": "W/\"KXHOOMECLDNUXSTOU\""
     }
   },
   "posted_titles": [
@@ -270,6 +271,10 @@
     [
       "Ferrari Luce, 2 Ayda Yıllık Satış Hedefini Geçti",
       1785412868.943473
+    ],
+    [
+      "Bir Skyrim Oyuncusu, Kullanıcı Adındaki \"Çift Alt Çizgi\" Yüzünden 18 Ay Hapiste Kaldı",
+      1785414666.3701208
     ]
   ]
 }
