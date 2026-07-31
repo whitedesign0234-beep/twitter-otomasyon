@@ -60,7 +60,7 @@
     "75a94ee771f4b1fc455f659a7e15c620a9d79577991c0b37b996b8433fd1cdf5": 1785432682.4638023,
     "c8efc9ba2348a5b634ec9f2edced4b15707894ec08bef955d362a4b8388dd139": 1785434490.7466815
   },
-  "last_post_ts": 1785510145.4871523,
+  "last_post_ts": 1785511908.1124089,
   "feed_meta": {
     "https://www.webtekno.com/rss.xml": {
       "etag": "W/\"31f12-657d7c59298d2\"",
@@ -307,5 +307,5 @@
       1785434490.7466836
     ]
   ],
-  "telegram_offset": 84323387
+  "telegram_offset": 84323388
 }
