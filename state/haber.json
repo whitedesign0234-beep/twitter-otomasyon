@@ -58,19 +58,20 @@
     "ad949ed9fb5eb8898d131e589d6e3c70a70834506accf571aa6be2e49a140772": 1785420067.4630907,
     "96263ffa6c67c9156abb47b77930d7b2f80682994b33acf9e5ed80a8ef9e7278": 1785430914.4930975,
     "75a94ee771f4b1fc455f659a7e15c620a9d79577991c0b37b996b8433fd1cdf5": 1785432682.4638023,
-    "c8efc9ba2348a5b634ec9f2edced4b15707894ec08bef955d362a4b8388dd139": 1785434490.7466815
+    "c8efc9ba2348a5b634ec9f2edced4b15707894ec08bef955d362a4b8388dd139": 1785434490.7466815,
+    "02237875c286b88d9a8b72b6acea3faf3e61891fa8bf04fe9e40982eddfd30d6": 1785520895.9591308
   },
-  "last_post_ts": 1785519106.9021108,
+  "last_post_ts": 1785520895.9591348,
   "feed_meta": {
     "https://www.webtekno.com/rss.xml": {
-      "etag": "W/\"31f12-657d7c59298d2\"",
-      "modified": "Thu, 30 Jul 2026 17:55:04 GMT"
+      "etag": "W/\"341e9-657ebf57f9129\"",
+      "modified": "Fri, 31 Jul 2026 18:00:07 GMT"
     },
     "https://www.haberturk.com/rss/yasam.xml": {
-      "etag": "W/\"KXADCFAPHHVZVKOPS\""
+      "etag": "W/\"KXADCFAPHHZOZPUNS\""
     },
     "https://www.haberturk.com/rss/ekonomi.xml": {
-      "etag": "W/\"KXADCFAPHHQKUZLQS\""
+      "etag": "W/\"KXHOOMECLDKWTOOOU\""
     }
   },
   "posted_titles": [
@@ -305,7 +306,11 @@
     [
       "OpenAI ve Jony Ive'ın İlk Yapay Zekâ Cihazı Bir \"HomePad\" mi Olacak?",
       1785434490.7466836
+    ],
+    [
+      "Samsung, One UI 9'u 49 Farklı Cihazda Test Etmeye Başladı: İşte Tam Liste!",
+      1785520895.9591334
     ]
   ],
-  "telegram_offset": 84323392
+  "telegram_offset": 84323393
 }
