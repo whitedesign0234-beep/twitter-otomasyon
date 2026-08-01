@@ -68,8 +68,8 @@ class ProfileState:
     posted_titles: list = field(default_factory=list)
     # Telegram kuyruğunda tüketilen son update_id (yalnızca başarılı paylaşımda artar).
     telegram_offset: int = 0
-    # Instagram FEED (Reels) paylaşım zaman damgaları — günlük limit için.
-    ig_feed_ts: list = field(default_factory=list)
+    # Son başarılı IG paylaşım tipi ("STORIES"/"REELS") — sıralı alternasyon için.
+    ig_last_type: str = ""
 
 
 class StateStore:
@@ -94,7 +94,7 @@ class StateStore:
                 feed_meta=dict(data.get("feed_meta", {})),
                 posted_titles=list(data.get("posted_titles", [])),
                 telegram_offset=int(data.get("telegram_offset", 0)),
-                ig_feed_ts=list(data.get("ig_feed_ts", [])),
+                ig_last_type=str(data.get("ig_last_type", "")),
             )
         except (json.JSONDecodeError, ValueError, OSError) as exc:
             logger.warning("State okunamadı (%s), sıfırdan başlanıyor: %s", self.path, exc)
@@ -135,20 +135,20 @@ class StateStore:
         """Telegram öğesini tüketilmiş işaretler (başarılı paylaşım sonrası)."""
         self.state.telegram_offset = max(self.state.telegram_offset, update_id)
 
-    def record_ig_feed_post(self) -> None:
-        """Başarılı bir IG FEED (Reels) paylaşımını kaydeder."""
-        self.state.ig_feed_ts.append(time.time())
+    def next_ig_type(self, start_with: str = "STORIES") -> str:
+        """Sıradaki IG paylaşım tipini döndürür (Story ↔ Reels sıralı alternasyon).
 
-    def ig_feed_count_24h(self) -> int:
-        """Son 24 saatteki IG feed paylaşım sayısı."""
-        cutoff = time.time() - SECONDS_PER_DAY
-        return sum(1 for ts in self.state.ig_feed_ts if ts >= cutoff)
+        Son başarılı tip Story ise Reels, değilse Story. Hiç paylaşım yoksa
+        `start_with` ile başlanır (varsayılan: Story)."""
+        if self.state.ig_last_type == "STORIES":
+            return "REELS"
+        if self.state.ig_last_type == "REELS":
+            return "STORIES"
+        return start_with
 
-    def minutes_since_last_ig_feed(self) -> float:
-        """Son IG feed paylaşımından bu yana geçen dakika (hiç yoksa çok büyük)."""
-        if not self.state.ig_feed_ts:
-            return float("inf")
-        return (time.time() - max(self.state.ig_feed_ts)) / 60.0
+    def record_ig_post(self, media_type: str) -> None:
+        """Başarılı bir IG paylaşımının tipini kaydeder (sonraki tersi olur)."""
+        self.state.ig_last_type = media_type
 
     def get_feed_meta(self, feed_url: str) -> dict[str, str]:
         """Feed için saklı ETag/Last-Modified başlıklarını döndürür."""
@@ -174,9 +174,6 @@ class StateStore:
         self.state.posted_titles = [
             entry for entry in self.state.posted_titles if entry[1] >= cutoff
         ]
-        # IG feed zaman damgalarında yalnızca son 24 saat gerekir.
-        day_cutoff = time.time() - SECONDS_PER_DAY
-        self.state.ig_feed_ts = [ts for ts in self.state.ig_feed_ts if ts >= day_cutoff]
         removed = before - len(self.state.seen)
         if removed:
             logger.info("State budandı: %d eski kayıt silindi", removed)
@@ -190,7 +187,7 @@ class StateStore:
             "feed_meta": self.state.feed_meta,
             "posted_titles": self.state.posted_titles,
             "telegram_offset": self.state.telegram_offset,
-            "ig_feed_ts": self.state.ig_feed_ts,
+            "ig_last_type": self.state.ig_last_type,
         }
         tmp = self.path.with_suffix(".json.tmp")
         tmp.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")

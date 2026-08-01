@@ -194,30 +194,31 @@ async def _cross_post_instagram(
     caption: str,
     ready: Path,
 ) -> None:
-    """Videoyu Instagram'a paylaşır: günlük feed kotası+aralığı uygunsa Reels,
-    değilse Story. Feed sayısı gün içine yayılsın diye min-aralık uygulanır."""
+    """Videoyu Instagram'a paylaşır: sıralı alternasyon — bir Story, bir Reels.
+
+    Son başarılı IG paylaşımı Story ise bu sefer Reels, Reels ise Story olur
+    (ilk sefer profildeki `start_with`). Tip yalnızca paylaşım BAŞARILI olursa
+    ilerler; başarısız olursa sonraki koşuda aynı tip tekrar denenir."""
     log = _plog(profile.name)
-    cfg = profile.instagram
-    count = store.ig_feed_count_24h()
-    gap_ok = store.minutes_since_last_ig_feed() >= cfg.min_minutes_between
+    start_with = "REELS" if profile.instagram.start_with == "reels" else "STORIES"
+    media_type = store.next_ig_type(start_with)
 
-    if count < cfg.max_per_day and gap_ok:
+    if media_type == "REELS":
         result = await ig_publisher.publish_video(caption, str(ready))
-        if result.success:
-            store.record_ig_feed_post()
-            log.info("Instagram feed (Reels) OK — bugün %d/%d", count + 1, cfg.max_per_day)
-        else:
-            log.warning("Instagram feed başarısız: %s", result.detail)
-        return
+    else:
+        story = media.prepare_story(ready)
+        if story is None:
+            log.warning("Story videosu hazırlanamadı — IG atlandı (sıra bozulmaz)")
+            return
+        result = await ig_publisher.publish_story("", str(story))
 
-    # Kota doldu ya da aralık gelmedi → Story (24 saatlik, feed'e girmez).
-    story = media.prepare_story(ready)
-    if story is None:
-        log.warning("Story videosu hazırlanamadı — IG atlandı")
-        return
-    result = await ig_publisher.publish_story("", str(story))
-    neden = "günlük kota doldu" if count >= cfg.max_per_day else "feed aralığı gelmedi"
-    log.info("Instagram Story (%s): %s", neden, "OK" if result.success else result.detail)
+    label = "Reels" if media_type == "REELS" else "Story"
+    if result.success:
+        store.record_ig_post(media_type)
+        log.info("Instagram %s OK (sıradaki: %s)",
+                 label, "Story" if media_type == "REELS" else "Reels")
+    else:
+        log.warning("Instagram %s başarısız: %s", label, result.detail)
 
 
 async def _try_telegram_queue(

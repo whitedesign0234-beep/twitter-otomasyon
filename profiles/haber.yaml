@@ -96,12 +96,11 @@ schedule:
     days: [1, 2, 3, 4, 5, 6, 7]
   active_days: [1, 2, 3, 4, 5, 6, 7]   # Pzt=1 .. Paz=7 (her gün)
 
-# Instagram çapraz paylaşım: günde 6 FEED (Reels), gün içine yayılmış.
-# Aktif pencere ~17.5 saat (sessiz saat hariç) / 6 ≈ her ~175 dk'da bir feed.
-# Kotayı/aralığı aşan videolar Story olarak paylaşılır (24 saatlik).
+# Instagram çapraz paylaşım: her Telegram videosu (X ile ~30 dk'da bir) IG'ye
+# de gider; IG tarafı SIRALI alternasyon yapar — bir Story, bir Reels, tekrar
+# Story, tekrar Reels... start_with ilk (state boşken) paylaşımın tipidir.
 instagram:
-  max_per_day: 6
-  min_minutes_between: 175
+  start_with: story
 
 state:
   namespace: haber

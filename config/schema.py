@@ -113,12 +113,13 @@ class StateConfig(BaseModel):
 
 
 class InstagramConfig(BaseModel):
-    """Instagram çapraz paylaşımının kendi sınırları (X'ten bağımsız)."""
+    """Instagram çapraz paylaşım davranışı (X'ten bağımsız).
 
-    # Son 24 saatte en fazla kaç IG paylaşımı (aşılınca video sadece X'e gider).
-    max_per_day: int = Field(default=6, ge=0)
-    # İki IG paylaşımı arası en az dakika (0 = boşluk yok). Eşit dağıtmak için.
-    min_minutes_between: int = Field(default=0, ge=0)
+    Her Telegram videosu X'e giderken IG'ye de gider; IG tarafı sıralı olarak
+    bir Story, bir Reels şeklinde alternatif paylaşır. `start_with` ilk (state
+    boşken) paylaşımın tipini belirler; sonrası hep tersine döner."""
+
+    start_with: Literal["story", "reels"] = "story"
 
 
 class Profile(BaseModel):
