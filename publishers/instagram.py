@@ -24,8 +24,8 @@ logger = logging.getLogger(__name__)
 # çalışıyor (graph.instagram.com / "Instagram Login" yolu işlemede takılıyordu).
 GRAPH_BASE = "https://graph.facebook.com/v21.0"
 CATBOX_URL = "https://catbox.moe/user/api.php"      # ücretsiz geçici dosya-host
-UPLOAD_TIMEOUT_SECONDS = 180
-UPLOAD_ATTEMPTS = 3
+UPLOAD_TIMEOUT_SECONDS = 60      # başarısız host'ta uzun beklememek için kısa
+UPLOAD_ATTEMPTS = 2
 API_TIMEOUT_SECONDS = 60
 CONTAINER_POLL_SECONDS = 5
 CONTAINER_POLL_MAX = 40                              # ~200 sn işleme beklemesi

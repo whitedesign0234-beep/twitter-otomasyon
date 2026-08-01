@@ -92,9 +92,8 @@ schedule:
   quiet_hours:
     start: "01:00"             # gece sessiz saat başlangıcı (Europe/Istanbul)
     end: "07:30"              # gece sessiz saat bitişi
-    # Sessiz saat SADECE Pzt-Cum sabahları (= Paz-Per geceleri) uygulanır.
-    # Cmt/Paz sabahları listede yok => Cuma ve Cumartesi geceleri paylaşım açık.
-    days: [1, 2, 3, 4, 5]
+    # HAFTANIN 7 GÜNÜ sessiz: her gece 01:00-07:30 arası paylaşım yapılmaz.
+    days: [1, 2, 3, 4, 5, 6, 7]
   active_days: [1, 2, 3, 4, 5, 6, 7]   # Pzt=1 .. Paz=7 (her gün)
 
 state:
