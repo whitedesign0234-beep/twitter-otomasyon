@@ -27,9 +27,9 @@ X_MAX_VIDEO_SECONDS = 118
 # Instagram Story video sınırı ~60 sn; güvenli olsun diye 58 sn.
 STORY_MAX_VIDEO_SECONDS = 58
 DOWNLOAD_TIMEOUT_SECONDS = 240     # tek video indirme üst sınırı
-FFMPEG_TIMEOUT_SECONDS = 300
-# X uyumlu, makul boyutlu mp4 tercih et (720p'ye kadar).
-YTDLP_FORMAT = "bv*[height<=720][ext=mp4]+ba[ext=m4a]/b[height<=720][ext=mp4]/b[ext=mp4]/b"
+FFMPEG_TIMEOUT_SECONDS = 420
+# X/IG uyumlu, YÜKSEK kalite mp4 tercih et (1080p'ye kadar — platform üst sınırı).
+YTDLP_FORMAT = "bv*[height<=1080][ext=mp4]+ba[ext=m4a]/b[height<=1080][ext=mp4]/b[ext=mp4]/b"
 
 
 def _run(command: list[str], timeout: int) -> subprocess.CompletedProcess | None:
@@ -114,8 +114,13 @@ def trim_video(path: Path, seconds: int = X_MAX_VIDEO_SECONDS) -> Path | None:
     result = _run(
         [
             "ffmpeg", "-y", "-i", str(path), "-t", str(seconds),
-            "-c:v", "libx264", "-preset", "veryfast", "-pix_fmt", "yuv420p",
-            "-c:a", "aac", "-b:a", "128k", "-movflags", "+faststart", str(output),
+            # Yüksek kalite: crf 18 (görsel olarak neredeyse kayıpsız), medium preset,
+            # high profil; ses 192k. (veryfast/varsayılan-crf kaliteyi düşürüyordu.)
+            # Hız/kalite dengesi: veryfast + crf 20 (1080p'de medium preset çok
+            # yavaş kalıp zaman aşımına uğruyordu; bu ayar hızlı ve yüksek kaliteli).
+            "-c:v", "libx264", "-preset", "veryfast", "-crf", "20",
+            "-profile:v", "high", "-pix_fmt", "yuv420p",
+            "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", str(output),
         ],
         FFMPEG_TIMEOUT_SECONDS,
     )
