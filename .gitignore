@@ -3,6 +3,8 @@
 # Ortam değişkenleri ve sırlar
 .env
 .sessions/
+# Yerel devir notu (operasyonel detay — public depoda olmasın)
+HANDOFF.md
 *.session.json
 session_*.json
 *.b64.txt
