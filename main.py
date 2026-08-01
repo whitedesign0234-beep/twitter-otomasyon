@@ -20,6 +20,8 @@ import sources  # noqa: F401  (yan etki: kaynak eklentilerini registry'ye kayded
 import telegram_inbox
 from config.schema import Profile, SourceConfig, discover_profiles, load_profile
 from publishers.base import DryRunPublisher, Publisher, PostResult
+from publishers.instagram import InstagramPublisher
+from publishers.instagram import read_config as instagram_read_config
 from publishers.twitter_browser import TwitterBrowserPublisher
 from publishers.x_api import XApiPublisher, read_credentials
 from rewriter import Rewriter, caption_from_text, caption_from_video
@@ -141,6 +143,17 @@ def build_publisher(profile: Profile, dry_run: bool) -> Publisher:
     return TwitterBrowserPublisher(profile.name, session_path, headless=True)
 
 
+def build_instagram_publisher(profile: Profile, dry_run: bool) -> InstagramPublisher | None:
+    """Instagram çapraz-paylaşım yayıncısını üretir; yapılandırılmamışsa None."""
+    if dry_run:
+        return None  # dry-run'da gerçek IG paylaşımı yapılmaz
+    config = instagram_read_config()
+    if config is None:
+        return None  # IG anahtarları yoksa çapraz paylaşım pasif
+    _plog(profile.name).info("Instagram çapraz paylaşım aktif")
+    return InstagramPublisher(config)
+
+
 def _telegram_caption(
     item: telegram_inbox.InboxItem, profile: Profile, video_path: str
 ) -> str:
@@ -175,9 +188,12 @@ def _telegram_caption(
 
 
 async def _try_telegram_queue(
-    profile: Profile, store: StateStore, publisher: Publisher
+    profile: Profile,
+    store: StateStore,
+    publisher: Publisher,
+    ig_publisher: InstagramPublisher | None,
 ) -> bool:
-    """Telegram kuyruğundaki ilk öğeyi paylaşır; paylaştıysa True döner."""
+    """Telegram kuyruğundaki ilk öğeyi X'e (ve varsa IG'ye) paylaşır."""
     log = _plog(profile.name)
     items = telegram_inbox.pending_items(store.telegram_offset)
     if not items:
@@ -205,15 +221,23 @@ async def _try_telegram_queue(
             return False
 
         caption = _telegram_caption(item, profile, str(ready))
+        # Birincil: X. Video dosyası temp dizini silinmeden ÖNCE her ikisi de yapılır.
         result = await publisher.publish_video(caption, str(ready))
+        # Çapraz paylaşım: Instagram (yapılandırılmışsa, en iyi çaba).
+        if ig_publisher is not None:
+            ig_result = await ig_publisher.publish_video(caption, str(ready))
+            log.info(
+                "Instagram çapraz paylaşım: %s",
+                "OK" if ig_result.success else ig_result.detail,
+            )
 
     if result.success:
         store.consume_telegram_update(item.update_id)
         store.set_last_post_now()
-        log.info("Telegram videosu paylaşıldı")
+        log.info("Telegram videosu paylaşıldı (X)")
         return True
 
-    log.warning("Telegram videosu paylaşılamadı: %s", result.detail)
+    log.warning("Telegram videosu X'e paylaşılamadı: %s", result.detail)
     return False  # offset ilerlemez: sonraki koşuda tekrar denenir
 
 
@@ -238,10 +262,11 @@ async def run_profile(profile: Profile, args: argparse.Namespace) -> None:
             return
 
     publisher = build_publisher(profile, dry_run=args.dry_run)
+    ig_publisher = build_instagram_publisher(profile, dry_run=args.dry_run)
 
     # ÖNCELİK 1: Telegram kuyruğu (kullanıcının telefondan gönderdiği video).
-    # Kuyrukta öğe varsa bu koşuda haber yerine o paylaşılır.
-    if await _try_telegram_queue(profile, store, publisher):
+    # Kuyrukta öğe varsa bu koşuda haber yerine o X'e (ve varsa IG'ye) paylaşılır.
+    if await _try_telegram_queue(profile, store, publisher, ig_publisher):
         if persist:
             store.save()
         return
