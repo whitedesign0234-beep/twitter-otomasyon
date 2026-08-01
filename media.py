@@ -24,6 +24,8 @@ YTDLP_CMD = [sys.executable, "-m", "yt_dlp"]
 # X (Premium olmayan hesap) 2 dakikadan uzun videoyu reddediyor (403). Güvenli
 # olsun diye 118 sn'ye kırpıyoruz (120'nin biraz altı).
 X_MAX_VIDEO_SECONDS = 118
+# Instagram Story video sınırı ~60 sn; güvenli olsun diye 58 sn.
+STORY_MAX_VIDEO_SECONDS = 58
 DOWNLOAD_TIMEOUT_SECONDS = 240     # tek video indirme üst sınırı
 FFMPEG_TIMEOUT_SECONDS = 300
 # X uyumlu, makul boyutlu mp4 tercih et (720p'ye kadar).
@@ -121,6 +123,18 @@ def trim_video(path: Path, seconds: int = X_MAX_VIDEO_SECONDS) -> Path | None:
         logger.warning("Video kırpılamadı")
         return None
     return output
+
+
+def prepare_story(path: Path) -> Path | None:
+    """Videoyu Instagram Story için hazırlar (≤58 sn). Uygunsa olduğu gibi döner."""
+    duration = video_duration(path)
+    if duration is not None and duration <= STORY_MAX_VIDEO_SECONDS:
+        return path
+    logger.info("Story için video ilk %d saniyeye kırpılıyor", STORY_MAX_VIDEO_SECONDS)
+    trimmed = trim_video(path, STORY_MAX_VIDEO_SECONDS)
+    if trimmed is None:
+        return path if (duration is not None and duration <= STORY_MAX_VIDEO_SECONDS) else None
+    return trimmed
 
 
 def prepare_for_x(path: Path) -> Path | None:

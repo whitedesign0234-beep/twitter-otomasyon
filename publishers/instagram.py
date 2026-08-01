@@ -126,20 +126,24 @@ class InstagramPublisher:
         self._user_id = config["user_id"]
 
     async def publish_video(self, text: str, video_path: str) -> PostResult:
-        """Videoyu Instagram Reels olarak paylaşır (senkron akış ayrı thread'de)."""
-        return await asyncio.to_thread(self._publish_sync, text, video_path)
+        """Videoyu Instagram Reels (feed) olarak paylaşır."""
+        return await asyncio.to_thread(self._publish_sync, text, video_path, "REELS")
+
+    async def publish_story(self, text: str, video_path: str) -> PostResult:
+        """Videoyu Instagram Story olarak paylaşır (24 saatlik, feed'e girmez)."""
+        return await asyncio.to_thread(self._publish_sync, text, video_path, "STORIES")
 
     async def publish(self, text: str, image_path: str | None) -> PostResult:
         """Instagram metin-only paylaşımı desteklemez (görsel/video gerekir)."""
         return PostResult(success=False, detail="instagram-text-only-desteklenmiyor")
 
-    def _publish_sync(self, text: str, video_path: str) -> PostResult:
+    def _publish_sync(self, text: str, video_path: str, media_type: str) -> PostResult:
         """Public URL -> konteyner -> işlenmeyi bekle -> yayınla akışını yürütür."""
         public_url = _upload_public(video_path)
         if not public_url:
             return PostResult(success=False, detail="IG: public URL oluşturulamadı")
 
-        creation_id = self._create_container(public_url, text)
+        creation_id = self._create_container(public_url, text, media_type)
         if creation_id is None:
             return PostResult(success=False, detail="IG: medya konteyneri oluşmadı")
 
@@ -148,17 +152,20 @@ class InstagramPublisher:
 
         return self._publish_container(creation_id)
 
-    def _create_container(self, video_url: str, caption: str) -> str | None:
-        """REELS medya konteyneri oluşturur, creation_id döndürür."""
+    def _create_container(self, video_url: str, caption: str, media_type: str) -> str | None:
+        """REELS/STORIES medya konteyneri oluşturur, creation_id döndürür."""
+        # Story'de caption gösterilmez; sadece Reels'te başlık kullanılır.
+        params = {
+            "media_type": media_type,
+            "video_url": video_url,
+            "access_token": self._token,
+        }
+        if media_type == "REELS":
+            params["caption"] = caption
         try:
             data = requests.post(
                 f"{GRAPH_BASE}/{self._user_id}/media",
-                data={
-                    "media_type": "REELS",
-                    "video_url": video_url,
-                    "caption": caption,
-                    "access_token": self._token,
-                },
+                data=params,
                 timeout=API_TIMEOUT_SECONDS,
             ).json()
         except (requests.RequestException, ValueError) as exc:

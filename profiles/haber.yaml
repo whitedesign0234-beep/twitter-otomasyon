@@ -96,6 +96,13 @@ schedule:
     days: [1, 2, 3, 4, 5, 6, 7]
   active_days: [1, 2, 3, 4, 5, 6, 7]   # Pzt=1 .. Paz=7 (her gün)
 
+# Instagram çapraz paylaşım: günde 6 FEED (Reels), gün içine yayılmış.
+# Aktif pencere ~17.5 saat (sessiz saat hariç) / 6 ≈ her ~175 dk'da bir feed.
+# Kotayı/aralığı aşan videolar Story olarak paylaşılır (24 saatlik).
+instagram:
+  max_per_day: 6
+  min_minutes_between: 175
+
 state:
   namespace: haber
   dedupe_ttl_days: 7

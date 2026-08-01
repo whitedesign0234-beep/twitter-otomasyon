@@ -112,6 +112,15 @@ class StateConfig(BaseModel):
     dedupe_ttl_days: int = Field(default=7, ge=1)
 
 
+class InstagramConfig(BaseModel):
+    """Instagram çapraz paylaşımının kendi sınırları (X'ten bağımsız)."""
+
+    # Son 24 saatte en fazla kaç IG paylaşımı (aşılınca video sadece X'e gider).
+    max_per_day: int = Field(default=6, ge=0)
+    # İki IG paylaşımı arası en az dakika (0 = boşluk yok). Eşit dağıtmak için.
+    min_minutes_between: int = Field(default=0, ge=0)
+
+
 class Profile(BaseModel):
     """Tek bir X hesabını besleyen tam profil tanımı."""
 
@@ -128,6 +137,7 @@ class Profile(BaseModel):
     persona: Persona
     sources: list[SourceConfig]
     schedule: Schedule = Field(default_factory=Schedule)
+    instagram: InstagramConfig = Field(default_factory=InstagramConfig)
     state: StateConfig
 
     @model_validator(mode="after")
