@@ -302,6 +302,13 @@ async def run_profile(profile: Profile, args: argparse.Namespace) -> None:
             store.save()
         return
 
+    # Otomatik haber akışı kapalıysa yalnızca Telegram gönderileri paylaşılır.
+    if not profile.auto_news:
+        log.info("Otomatik haber akışı kapalı — yalnızca Telegram gönderileri paylaşılır")
+        if persist:
+            store.save()
+        return
+
     # ÖNCELİK 2: Normal haber akışı (metin + görsel).
     candidates = fetch_all_sources(profile, store, args.source)
     chosen = select(profile, candidates, store, ignore_schedule=args.ignore_schedule)

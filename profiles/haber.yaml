@@ -6,6 +6,11 @@ name: haber
 enabled: true
 account_handle: "@habermatikHQ"
 
+# Otomatik RSS haber akışı KAPALI: X ve IG yalnızca kullanıcı Telegram botuna
+# gönderdikçe paylaşır. Otomatik haber tweet'i atılmaz (X maliyeti ~sıfır).
+# Tekrar açmak için: auto_news: true (aşağıdaki sources kullanılır).
+auto_news: false
+
 # Resmi X API ile paylaşım (tarayıcı yok, giriş yok, ban yok).
 publisher_type: x_api
 # Bu profilin API anahtarları .env'de şu adlarla aranır (yoksa eksiz hali):

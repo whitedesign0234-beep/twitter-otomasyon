@@ -135,17 +135,20 @@ class Profile(BaseModel):
     # Başlığında bu kelimelerden biri geçen haberi ELE (tıklama tuzağı/belirsiz
     # başlık filtresi, ör. "deprem mi oldu"). Büyük/küçük harf duyarsız.
     exclude_title_keywords: list[str] = Field(default_factory=list)
+    # Otomatik RSS haber akışı. False ise SADECE Telegram gönderileri paylaşılır
+    # (kullanıcı bota attıkça X + IG). Kapalıyken RSS kaynağı gerekmez.
+    auto_news: bool = True
     persona: Persona
-    sources: list[SourceConfig]
+    sources: list[SourceConfig] = Field(default_factory=list)
     schedule: Schedule = Field(default_factory=Schedule)
     instagram: InstagramConfig = Field(default_factory=InstagramConfig)
     state: StateConfig
 
     @model_validator(mode="after")
     def _validate_consistency(self) -> "Profile":
-        """Kaynak listesi boş olmamalı ve namespace/name tutarlı olmalı."""
-        if not self.sources:
-            raise ValueError(f"Profil '{self.name}' en az bir kaynak içermeli")
+        """Otomatik haber açıksa en az bir kaynak gerekir."""
+        if self.auto_news and not self.sources:
+            raise ValueError(f"Profil '{self.name}' auto_news açıkken en az bir kaynak içermeli")
         return self
 
 
