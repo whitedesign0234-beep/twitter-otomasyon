@@ -43,6 +43,20 @@ def read_config() -> dict[str, str] | None:
 _UA = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124 Safari/537.36"
 
 
+def _up_cloudinary(path: str) -> str | None:
+    """Videoyu Cloudinary'ye yükler (güvenilir CDN, IG kolayca çeker)."""
+    cn = os.environ.get("CLOUDINARY_CLOUD_NAME", "").strip()
+    ck = os.environ.get("CLOUDINARY_API_KEY", "").strip()
+    cs = os.environ.get("CLOUDINARY_API_SECRET", "").strip()
+    if not (cn and ck and cs):
+        return None
+    import cloudinary
+    import cloudinary.uploader
+    cloudinary.config(cloud_name=cn, api_key=ck, api_secret=cs, secure=True)
+    result = cloudinary.uploader.upload_large(path, resource_type="video")
+    return result.get("secure_url")
+
+
 def _up_0x0(path: str) -> str | None:
     """0x0.st'ye yükler (sunucu dostu)."""
     with open(path, "rb") as f:
@@ -82,7 +96,12 @@ def _upload_public(video_path: str) -> str | None:
     GitHub runner'ın sunucu IP'si bazı host'larca engellenebildiği için (ör. catbox
     412) çoklu host + yeniden deneme kullanılır.
     """
-    hosts = [("0x0.st", _up_0x0), ("tmpfiles", _up_tmpfiles), ("catbox", _up_catbox)]
+    # Cloudinary yapılandırılmışsa birincil (en güvenilir); sonra ücretsiz yedekler.
+    hosts: list[tuple[str, object]] = []
+    if os.environ.get("CLOUDINARY_CLOUD_NAME", "").strip():
+        hosts.append(("cloudinary", _up_cloudinary))
+    hosts += [("0x0.st", _up_0x0), ("tmpfiles", _up_tmpfiles), ("catbox", _up_catbox)]
+
     for name, uploader in hosts:
         for attempt in range(UPLOAD_ATTEMPTS):
             try:
@@ -92,7 +111,7 @@ def _upload_public(video_path: str) -> str | None:
                     return url
                 logger.warning("%s beklenmedik yanıt", name)
                 break
-            except (requests.RequestException, OSError, ValueError) as exc:
+            except Exception as exc:  # host SDK'ları farklı istisnalar fırlatabilir
                 logger.warning("%s deneme %d başarısız: %s", name, attempt + 1, str(exc)[:120])
                 time.sleep(2)
     return None
