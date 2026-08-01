@@ -40,28 +40,61 @@ def read_config() -> dict[str, str] | None:
     return None
 
 
-def _upload_public(video_path: str) -> str | None:
-    """Videoyu geçici public host'a yükler ve erişilebilir URL'sini döndürür.
+_UA = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124 Safari/537.36"
 
-    Ağ dalgalanmasına karşı birkaç kez dener.
+
+def _up_0x0(path: str) -> str | None:
+    """0x0.st'ye yükler (sunucu dostu)."""
+    with open(path, "rb") as f:
+        r = requests.post("https://0x0.st", files={"file": f},
+                          headers={"User-Agent": _UA}, timeout=UPLOAD_TIMEOUT_SECONDS)
+    r.raise_for_status()
+    url = r.text.strip()
+    return url if url.startswith("http") else None
+
+
+def _up_tmpfiles(path: str) -> str | None:
+    """tmpfiles.org'a yükler; doğrudan indirme (/dl/) URL'sine çevirir."""
+    with open(path, "rb") as f:
+        r = requests.post("https://tmpfiles.org/api/v1/upload",
+                          files={"file": (os.path.basename(path), f)},
+                          headers={"User-Agent": _UA}, timeout=UPLOAD_TIMEOUT_SECONDS)
+    r.raise_for_status()
+    url = (r.json().get("data") or {}).get("url", "")
+    # tmpfiles.org/123/x.mp4 -> tmpfiles.org/dl/123/x.mp4 (doğrudan dosya)
+    return url.replace("tmpfiles.org/", "tmpfiles.org/dl/", 1) if url.startswith("http") else None
+
+
+def _up_catbox(path: str) -> str | None:
+    """catbox.moe'ye yükler (bazı sunucu IP'lerini engelleyebilir)."""
+    with open(path, "rb") as f:
+        r = requests.post(CATBOX_URL, data={"reqtype": "fileupload"},
+                          files={"fileToUpload": f},
+                          headers={"User-Agent": _UA}, timeout=UPLOAD_TIMEOUT_SECONDS)
+    r.raise_for_status()
+    url = r.text.strip()
+    return url if url.startswith("http") else None
+
+
+def _upload_public(video_path: str) -> str | None:
+    """Videoyu birden fazla public host'a sırayla dener; ilk başaranın URL'si döner.
+
+    GitHub runner'ın sunucu IP'si bazı host'larca engellenebildiği için (ör. catbox
+    412) çoklu host + yeniden deneme kullanılır.
     """
-    for attempt in range(UPLOAD_ATTEMPTS):
-        try:
-            with open(video_path, "rb") as handle:
-                response = requests.post(
-                    CATBOX_URL,
-                    data={"reqtype": "fileupload"},
-                    files={"fileToUpload": handle},
-                    timeout=UPLOAD_TIMEOUT_SECONDS,
-                )
-            response.raise_for_status()
-            url = response.text.strip()
-            if url.startswith("http"):
-                return url
-            logger.warning("Public host beklenmedik yanıt: %s", url[:100])
-        except (requests.RequestException, OSError) as exc:
-            logger.warning("Public host yükleme denemesi %d başarısız: %s", attempt + 1, exc)
-        time.sleep(3)
+    hosts = [("0x0.st", _up_0x0), ("tmpfiles", _up_tmpfiles), ("catbox", _up_catbox)]
+    for name, uploader in hosts:
+        for attempt in range(UPLOAD_ATTEMPTS):
+            try:
+                url = uploader(video_path)
+                if url:
+                    logger.info("Public host OK: %s", name)
+                    return url
+                logger.warning("%s beklenmedik yanıt", name)
+                break
+            except (requests.RequestException, OSError, ValueError) as exc:
+                logger.warning("%s deneme %d başarısız: %s", name, attempt + 1, str(exc)[:120])
+                time.sleep(2)
     return None
 
 
