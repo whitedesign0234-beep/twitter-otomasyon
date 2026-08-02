@@ -63,7 +63,7 @@
     "431b108cf23950b83b36173dfb9ca60524f0743a15b86bfebd4c8bad23fc32d1": 1785538980.960415,
     "7eacf8d621dfacb091fecaf4fce51cfd4567ab61b3a0cd09daa622652b410180": 1785620029.3934808
   },
-  "last_post_ts": 1785654224.1160414,
+  "last_post_ts": 1785663223.5060098,
   "feed_meta": {
     "https://www.webtekno.com/rss.xml": {
       "etag": "W/\"341e9-6580305a78ff8\"",
@@ -322,6 +322,6 @@
       1785620029.3934839
     ]
   ],
-  "telegram_offset": 84323444,
-  "ig_last_type": "STORIES"
+  "telegram_offset": 84323445,
+  "ig_last_type": "REELS"
 }
