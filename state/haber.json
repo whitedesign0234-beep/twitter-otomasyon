@@ -1,6 +1,5 @@
 {
   "seen": {
-    "e00b5674ff68013531f3f41b92d5e92654759a4554cb6762a2f47c353df23033": 1785317466.4531662,
     "2aa46830f38745937054922c18a9caa00b4c1cb9bf5ab0f39d6fdef1b57797b0": 1785319274.5435,
     "2b21a4e9c012371cf0fb3a689c3ec196e567f2c48ef362a58d9ddeb69d0d8607": 1785322873.766454,
     "d8b8cd4c4d47032501408e176fb7d24e83f06323c1ef53f91608bc28f38df2c9": 1785324666.9864569,
@@ -50,7 +49,7 @@
     "431b108cf23950b83b36173dfb9ca60524f0743a15b86bfebd4c8bad23fc32d1": 1785538980.960415,
     "7eacf8d621dfacb091fecaf4fce51cfd4567ab61b3a0cd09daa622652b410180": 1785620029.3934808
   },
-  "last_post_ts": 1785920590.798384,
+  "last_post_ts": 1785922327.5455308,
   "feed_meta": {
     "https://www.webtekno.com/rss.xml": {
       "etag": "W/\"341e9-6580305a78ff8\"",
@@ -64,10 +63,6 @@
     }
   },
   "posted_titles": [
-    [
-      "HBO Max'e TikTok Benzeri Kısa Videolar Geldi",
-      1785317466.4531689
-    ],
     [
       "[21-28 Temmuz 2026] Steam Türkiye'de En Çok Satan Oyunlar Açıklandı",
       1785319274.5435026
@@ -261,6 +256,6 @@
       1785620029.3934839
     ]
   ],
-  "telegram_offset": 84323479,
-  "ig_last_type": "STORIES"
+  "telegram_offset": 84323480,
+  "ig_last_type": "REELS"
 }
