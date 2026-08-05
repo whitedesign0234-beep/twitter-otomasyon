@@ -1,7 +1,5 @@
 {
   "seen": {
-    "0fa5fd0d2ef33a9a6d93df8bdce433135ec06913ae05a4a325f54e5414906cc5": 1785328268.2226496,
-    "c765a3d5da6f65ab06f4b401b58c140d2e7a2f0afc5afe6b456dc482a39cd2b6": 1785330074.947825,
     "2adff2c432634ede5c34dd377e26f16d80469f20f3ebe13fe14daaaa19dfeb25": 1785331863.596527,
     "842e0c935e4ec39a9afcef19b3316b85d7cf45b55018fd9d6be7e96b25de06c4": 1785333680.0647738,
     "0ee3b56e983cd14fc193b12c16c177a29da0ef8db3c3d41fb0e2bb9aad0f29c4": 1785335468.2339969,
@@ -45,7 +43,7 @@
     "431b108cf23950b83b36173dfb9ca60524f0743a15b86bfebd4c8bad23fc32d1": 1785538980.960415,
     "7eacf8d621dfacb091fecaf4fce51cfd4567ab61b3a0cd09daa622652b410180": 1785620029.3934808
   },
-  "last_post_ts": 1785933005.6814814,
+  "last_post_ts": 1785934993.3691435,
   "feed_meta": {
     "https://www.webtekno.com/rss.xml": {
       "etag": "W/\"341e9-6580305a78ff8\"",
@@ -59,14 +57,6 @@
     }
   },
   "posted_titles": [
-    [
-      "Samsung Galaxy S26 FE'nin Şarj Hızı Ortaya Çıktı",
-      1785328268.2226522
-    ],
-    [
-      "GTA 6'yı Bu Ülkeden Alırsanız Elinizde Patlayabilir: Kodlar Sadece 170 Gün Geçerli Olacak!",
-      1785330074.9478283
-    ],
     [
       "Apple, Çok Yakında 3 Yeni Ev Ürünü Tanıtabilir",
       1785331863.5965297
@@ -236,6 +226,6 @@
       1785620029.3934839
     ]
   ],
-  "telegram_offset": 84323486,
-  "ig_last_type": "REELS"
+  "telegram_offset": 84323487,
+  "ig_last_type": "STORIES"
 }
